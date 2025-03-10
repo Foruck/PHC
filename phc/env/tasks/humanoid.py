@@ -731,6 +731,9 @@ class Humanoid(BaseTask):
             print("Unsupported character config file: {s}".format(asset_file))
             assert (False)
 
+        if self.use_fatigue and self.cfg.env.get('MFObs', False):
+            self._num_self_obs += 1
+            
         return
 
     def _build_termination_heights(self):
@@ -1541,12 +1544,23 @@ class Humanoid(BaseTask):
                 else:
                     obs = compute_humanoid_observations(root_pos, root_rot, root_vel, root_ang_vel, dof_pos, dof_vel, key_body_pos, self._local_root_obs, self._root_height_obs, self._dof_obs_size, self._dof_offsets)
             
+            if self.cfg.env.get('MFObs', False):
+                if env_ids is None:
+                    obs = torch.cat([obs, self.MA], dim=-1),
+                else:
+                    obs = torch.cat([obs, self.MA[env_ids]], dim=-1)
         return obs
 
     def _reset_actors(self, env_ids):
         self._humanoid_root_states[env_ids] = self._initial_humanoid_root_states[env_ids]
         self._dof_pos[env_ids] = self._initial_dof_pos[env_ids]
         self._dof_vel[env_ids] = self._initial_dof_vel[env_ids]
+        if self.use_fatigue:
+            self.MF[env_ids] = 0
+            self.MA[env_ids] = 0
+            self.MR[env_ids] = 100
+            self.TL[env_ids] = 0
+            self.RC[env_ids] = 1
         return
 
     def pre_physics_step(self, actions):
