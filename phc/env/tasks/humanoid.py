@@ -733,7 +733,7 @@ class Humanoid(BaseTask):
 
         if self.use_fatigue and self.cfg.env.get('MFObs', False):
             self._num_self_obs += 1
-            
+
         return
 
     def _build_termination_heights(self):
@@ -1602,7 +1602,10 @@ class Humanoid(BaseTask):
             pd_tar_tensor = gymtorch.unwrap_tensor(pd_tar)
             
             if self.pd_modifier:
-                modifier = self.actions[:, -1:].sigmoid()
+                if self.cfg.env.get('pd_modifier_type', 'clip') == 'sigmoid':
+                    modifier = self.actions[:, -1:].sigmoid()
+                else:
+                    modifier = (self.actions[:, -1:].clamp(-1, 1) + 1.) / 2
                 stiffness = modifier.reshape(-1, 1) * self.p_gains
                 damping   = modifier.reshape(-1, 1) * self.d_gains
                 # print(modifier.shape, self.p_gains.shape, self.d_gains.shape, pd_tar.shape, self._dof_pos.shape, self._dof_vel.shape)
