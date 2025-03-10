@@ -51,6 +51,7 @@ from poselib.poselib.skeleton.skeleton3d import SkeletonMotion, SkeletonState
 from scipy.spatial.transform import Rotation as sRot
 import gc
 import torch.multiprocessing as mp
+from torch.distributions import Uniform
 from phc.utils.draw_utils import agt_color, get_color_gradient
 
 
@@ -74,6 +75,7 @@ PERTURB_OBJS = [
     ["small", 60],
     # ["large", 60],
 ]
+FORCE_MAXES = [289.66, 315.79, 234.43, 78.61, 167.3, 61.56, 281.26, 184.85, 201.46, 237.31, 186.61, 263.18, 242.94, 152.18, 697.8, 796.42, 541.85, 872.66, 238.44, 597.67, 213.37, 614.75, 1120.94, 373.14, 901.95, 437.76, 455.27, 245.11]
 
 
 class Humanoid(BaseTask):
@@ -91,6 +93,12 @@ class Humanoid(BaseTask):
             self._pd_control = True
         else:
             self._pd_control = False
+        
+        # xinpeng added for pd modifier and fatigue
+        self.pd_modifier = cfg["env"].get("pd_modifier", False)
+        self.use_fatigue = cfg["env"].get("use_fatigue", False)
+        self.randomized_fatigue = cfg["env"].get("randomized_fatigue", False)
+
         self.power_scale = self.cfg["control"].get("powerScale", 1.0)
 
         self.debug_viz = self.cfg["env"]["enable_debug_vis"]
@@ -116,7 +124,6 @@ class Humanoid(BaseTask):
         self.cfg["device_id"] = device_id
         self.cfg["headless"] = headless
 
-
         super().__init__(cfg=self.cfg)
 
         self.dt = self.control_freq_inv * sim_params.dt
@@ -127,6 +134,10 @@ class Humanoid(BaseTask):
         if self.humanoid_type in ['h1', 'g1', ]:
             self.gravity_vec = to_torch(get_axis_params(-1., self.up_axis_idx), device=self.device).repeat((self.num_envs, 1))
             self.base_link_id = self._build_key_body_ids_tensor([self.cfg.robot.base_link]).squeeze()
+        
+        # xinpeng added for fatigue
+        if self.use_fatigue:
+            self.init_fatigue()
 
         return
 
@@ -246,7 +257,6 @@ class Humanoid(BaseTask):
         if self.viewer != None or flags.server_mode:
             self._init_camera()
 
-
     def load_humanoid_configs(self, cfg):
         self.humanoid_type = cfg.robot.humanoid_type
         if self.humanoid_type in ["smpl", "smplh", "smplx"]:
@@ -255,8 +265,7 @@ class Humanoid(BaseTask):
             self.load_robot_configs(cfg)
         else:
             raise NotImplementedError
-        
-            
+                    
     def load_common_humanoid_configs(self, cfg):
         self._divide_group = cfg["env"].get("divide_group", False)
         self._group_obs = cfg["env"].get("group_obs", False)
@@ -534,6 +543,20 @@ class Humanoid(BaseTask):
         self._create_envs(self.num_envs, self.cfg["env"]['env_spacing'], int(np.sqrt(self.num_envs)))
         return
 
+    def init_fatigue(self):
+        self.num3CC = 1
+        self.MF = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.MA = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.MR = torch.ones(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.TL = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.RC = torch.ones(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.LD = self.cfg['env'].get('LD', 10.)
+        self.LR = self.cfg['env'].get('LR', 10.)
+        self.F  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigueF', 1.)
+        self.r  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigue_r', 1.)
+        self.R  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigueR', 0.01)
+        self.known_peaks = torch.tensor(FORCE_MAXES, device=self.device, requires_grad=False)
+
     def reset(self, env_ids=None):
         safe_reset = (env_ids is None) or len(env_ids) == self.num_envs
         if (env_ids is None):
@@ -560,7 +583,6 @@ class Humanoid(BaseTask):
             
         self.sample_char_color(torch.tensor(colors), torch.arange(self.num_envs))
         
-
     def sample_char_color(self, cols, env_ids):
         for env_id in env_ids:
             env_ptr = self.envs[env_id]
@@ -581,7 +603,6 @@ class Humanoid(BaseTask):
 
         return
 
-
     def _reset_envs(self, env_ids):
         if (len(env_ids) > 0):
             
@@ -593,8 +614,12 @@ class Humanoid(BaseTask):
                 self._init_tensor_history(env_ids)
             
             self._compute_observations(env_ids)
-        
-        
+            if self.use_fatigue:
+                self.MF[:] = 0.
+                self.MA[:] = 0.
+                self.MR[:] = 1.
+                self.TL[:] = 0.
+                self.RC[:] = 1.
         return
 
     def _reset_env_tensors(self, env_ids):
@@ -660,6 +685,9 @@ class Humanoid(BaseTask):
                 self._num_actions = len(self.action_idx)
             else:
                 self._num_actions = len(self._dof_names) * 3
+            
+            if self.pd_modifier:
+                self._num_actions += 1
 
             if (ENABLE_MAX_COORD_OBS):
                 self._num_self_obs = 1 + len(self._body_names) * (3 + 6 + 3 + 3) - 3  # height + num_bodies * 15 (pos + vel + rot + ang_vel) - root_pos
@@ -1180,8 +1208,11 @@ class Humanoid(BaseTask):
             self.p_gains, self.d_gains = to_torch(self.p_gains), to_torch(self.d_gains)
             self.default_dof_pos = torch.zeros(1, self.num_dof).to(self.device)
         
-        
-        dof_prop = self.gym.get_asset_dof_properties(humanoid_asset)
+        elif self.humanoid_type in ['smpl', 'smplh', 'smplx']:
+            self.p_gains = to_torch(dof_prop['stiffness'], device=self.device)[None]
+            self.d_gains = to_torch(dof_prop['damping'], device=self.device)[None]
+
+        # dof_prop = self.gym.get_asset_dof_properties(humanoid_asset)
         if self.control_mode in ["isaac_pd"]:
             dof_prop["driveMode"] = gymapi.DOF_MODE_POS
             pd_scale = 1
@@ -1541,10 +1572,10 @@ class Humanoid(BaseTask):
                 if self.reduce_action:
                     actions_full = torch.zeros([actions.shape[0], self._dof_size]).to(self.device)
                     actions_full[:, self.action_idx] = self.actions
-                    pd_tar = self._action_to_pd_targets(actions_full)
+                    pd_tar = self._action_to_pd_targets(actions_full[..., :self.num_dof])
 
                 else:
-                    pd_tar = self._action_to_pd_targets(self.actions)
+                    pd_tar = self._action_to_pd_targets(self.actions[..., :self.num_dof])
                     if self._freeze_hand:
                         pd_tar[:, self._dof_names.index("L_Hand") * 3:(self._dof_names.index("L_Hand") * 3 + 3)] = 0
                         pd_tar[:, self._dof_names.index("R_Hand") * 3:(self._dof_names.index("R_Hand") * 3 + 3)] = 0
@@ -1552,10 +1583,42 @@ class Humanoid(BaseTask):
                         pd_tar[:, self._dof_names.index("L_Toe") * 3:(self._dof_names.index("L_Toe") * 3 + 3)] = 0
                         pd_tar[:, self._dof_names.index("R_Toe") * 3:(self._dof_names.index("R_Toe") * 3 + 3)] = 0
             elif self.humanoid_type in ['h1','g1', ]:
-                pd_tar = self._action_to_pd_targets(self.actions)
-                
+                pd_tar = self._action_to_pd_targets(self.actions[..., :self.num_dof])
                 
             pd_tar_tensor = gymtorch.unwrap_tensor(pd_tar)
+            
+            if self.pd_modifier:
+                modifier = self.actions[:, -1:].sigmoid()
+                stiffness = modifier.reshape(-1, 1) * self.p_gains
+                damping   = modifier.reshape(-1, 1) * self.d_gains
+                # print(modifier.shape, self.p_gains.shape, self.d_gains.shape, pd_tar.shape, self._dof_pos.shape, self._dof_vel.shape)
+                intended_torques = modifier * (self.p_gains * (pd_tar - self._dof_pos) - self.d_gains * self._dof_vel)
+                self.torques = intended_torques
+                self.intended_torques = intended_torques
+
+                if self.use_fatigue:
+                    clipped_intended_torques = torch.clip(intended_torques, -self.known_peaks, self.known_peaks)
+                    if self.randomized_fatigue:
+                        self.MR[:, :] = Uniform(0, 100).sample(self.MR.shape).to(self.device)
+                        self.MF[:, :] = Uniform(0, 100 - self.MR[:, :]).sample().to(self.device)
+                        self.MA = 100. - self.MR - self.MF
+                        self.RC = torch.ones_like(self.RC, device=self.device) - self.MF / 100.
+                    else:
+                        self.compute_3CC(clipped_intended_torques)
+                    effective_peaks = self.RC * self.known_peaks
+                    effective_torques = torch.clip(intended_torques, -effective_peaks, effective_peaks)
+                    clip_ratios = torch.where(intended_torques == 0, intended_torques, effective_torques / intended_torques)
+                    stiffness  *= clip_ratios
+                    damping    *= clip_ratios
+                
+                stiffness_np = stiffness.cpu().detach().numpy()
+                damping_np = damping.cpu().detach().numpy()
+                for i, (env_ptr, actor_handle) in enumerate(zip(self.envs, self.humanoid_handles)):
+                    dof_prop = self.gym.get_actor_dof_properties(env_ptr, actor_handle)
+                    dof_prop['stiffness'][:] = stiffness_np[i]
+                    dof_prop['damping'][:] = damping_np[i]
+                    self.gym.set_actor_dof_properties(env_ptr, actor_handle, dof_prop)
+
             self.gym.set_dof_position_target_tensor(self.sim, pd_tar_tensor)
         
         else:
@@ -1570,6 +1633,20 @@ class Humanoid(BaseTask):
                 
         return
     
+    def compute_3CC(self, intended_torques):
+        self.TL = torch.clip(intended_torques, -self.known_peaks, self.known_peaks)
+        Ct = torch.zeros_like(self.TL, requires_grad=False)
+        Ct = torch.where((self.MA < self.TL) * (self.MR > (self.TL - self.MA)), self.LD * (self.TL - self.MA), Ct)
+        Ct = torch.where((self.MA < self.TL) * (self.MR < (self.TL - self.MA)), self.LD * self.MR, Ct)
+        Ct = torch.where(self.MA >= self.TL, self.LR * (self.TL - self.MA), Ct)
+        rR = torch.where(self.MA >= self.TL, self.r * self.R, self.R)
+        dMR = rR * self.MF - Ct
+        dMA = Ct - self.F * self.MA
+        dMF = self.F * self.MA - rR * self.MF
+        self.MR += dMR * self.dt
+        self.MA += dMA * self.dt
+        self.MF += dMF * self.dt
+        self.RC  = 1 - self.MF / 100.
     
     def _compute_torques(self, actions):
         """ Compute torques from actions.
@@ -1585,7 +1662,6 @@ class Humanoid(BaseTask):
         actions_scaled = actions * self.cfg.control.action_scale # 0.5
         # print(actions)
         if control_type=="P": # default 
-            
             torques = self.p_gains*(actions_scaled + self.default_dof_pos - self._dof_pos) - self.d_gains*self._dof_vel
         elif control_type=="V":
             torques = self.p_gains*(actions_scaled - self.dof_vel) - self.d_gains*(self.dof_vel - self.last_dof_vel)/self.sim_params.dt
@@ -1595,8 +1671,11 @@ class Humanoid(BaseTask):
             raise NameError(f"Unknown controller type: {control_type}")
         # if self.cfg.domain_rand.randomize_torque_rfi:
             # torques = torques + (torch.rand_like(torques)*2.-1.) * self.cfg.domain_rand.rfi_lim * self.torque_limits
+        # xinpeng added pd modifier
+        if self.pd_modifier:
+            modifier = actions[:, -1:]
+            torques *= modifier
         return torch.clip(torques, -self.torque_limits, self.torque_limits)
-    
     
     def _physics_step(self):
         self.render(i = 0) # Render outside of the step function.

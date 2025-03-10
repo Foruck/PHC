@@ -32,6 +32,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
         self.mpjpe, self.mpjpe_all = [], []
         self.gt_pos, self.gt_pos_all = [], []
         self.pred_pos, self.pred_pos_all = [], []
+        self.pred_rot, self.pred_rot_all = [], []
         self.curr_stpes = 0
 
         if COLLECT_Z:
@@ -101,6 +102,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
             self.mpjpe.append(info["mpjpe"])
             self.gt_pos.append(info["body_pos_gt"])
             self.pred_pos.append(info["body_pos"])
+            self.pred_rot.append(info['body_rot'])
             if COLLECT_Z: self.zs.append(info["z"])
             self.curr_stpes += 1
 
@@ -122,6 +124,8 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 all_body_pos_pred = [all_body_pos_pred[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
                 all_body_pos_gt = np.stack(self.gt_pos)
                 all_body_pos_gt = [all_body_pos_gt[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
+                all_body_rot_pred = np.stack(self.pred_rot)
+                all_body_rot_pred = [all_body_rot_pred[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
 
                 if COLLECT_Z:
                     all_zs = torch.stack(self.zs)
@@ -153,6 +157,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 self.mpjpe_all.append(all_mpjpe)
                 self.pred_pos_all += all_body_pos_pred
                 self.gt_pos_all += all_body_pos_gt
+                self.pred_rot_all += all_body_rot_pred
                 
 
                 if (humanoid_env.start_idx + humanoid_env.num_envs >= humanoid_env._motion_lib._num_unique_motions):
@@ -163,7 +168,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                     gt_pos_all_succ = [(self.gt_pos_all[: humanoid_env._motion_lib._num_unique_motions])[i] for i in succ_idxes]
 
                     pred_pos_all = self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions]
-                    gt_pos_all = self.gt_pos_all[: humanoid_env._motion_lib._num_unique_motions]
+                    gt_pos_all = self.gt_pos_all[:humanoid_env._motion_lib._num_unique_motions]
 
                     # np.sum([i.shape[0] for i in self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions]])
                     # humanoid_env._motion_lib.get_motion_num_steps().sum()
@@ -199,11 +204,14 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
 
                     if humanoid_env.collect_dataset:
                         motion_file = humanoid_env.cfg.env.motion_file.split('/')[-1].split('.')[0]
-                        dump_dir = osp.join(self.config['network_path'], "phc_act", motion_file, f"noise_{humanoid_env.add_action_noise}_{humanoid_env.action_noise_std}_{datetime.now().strftime('%Y-%m-%d-%H:%M:%S')}.pkl")
+                        dump_dir = osp.join(self.config['network_path'], "phc_act", motion_file, f"noise_{humanoid_env.add_action_noise}_{humanoid_env.action_noise_std}_{humanoid_env.reaction_idx}_{humanoid_env.external_interference_amplitude}_{humanoid_env.reaction_prob}_{humanoid_env.reaction_mode}.pkl")
                         os.makedirs(osp.join(self.config['network_path'], "phc_act", motion_file), exist_ok=True)
                         print("Dumping to: ", dump_dir)
                         joblib.dump({
                                 "obs": self.obs_buf_all, 
+                                "gt_pos": self.gt_pos_all,
+                                'pred_pos': self.pred_pos_all,
+                                'pred_rot': self.pred_rot_all,
                                 "clean_action": self.clean_actions_all, 
                                 "env_action": self.actions_all,
                                 "key_names": np.array(self.keys_all),

@@ -46,6 +46,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         self._min_motion_len = cfg["env"].get("min_length", -1)
         self._traj_sample_timestep = 1 / cfg["env"].get("trajSampleTimestepInv", 30)
 
+
         self.load_humanoid_configs(cfg)
         self.cfg = cfg
         self.num_envs = cfg["env"]["num_envs"]
@@ -53,6 +54,14 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         self.device_id = cfg.get("device_id", 0)
         self.headless = cfg["headless"]
         #self.start_idx = 0
+        
+        # xinpeng added for reaction
+        self.reaction = cfg["env"].get("reaction", False)
+        self.reaction_mode = cfg["env"].get("reaction_mode", "force")
+        self.reaction_idx = cfg['env'].get('reaction_idx', 0)
+        self.external_interference_amplitude = cfg['env'].get('external_interference_amplitude', 100)
+        self.reaction_prob = cfg['env'].get('reaction_prob', 0.1)
+        # xinpeng added for reaction
 
         self.reward_specs = cfg["env"].get("reward_specs", {"k_pos": 100, "k_rot": 10, "k_vel": 0.1, "k_ang_vel": 0.1, "w_pos": 0.5, "w_rot": 0.3, "w_vel": 0.1, "w_ang_vel": 0.1})
 
@@ -119,6 +128,8 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         self.vis_ref = True
         self.vis_contact = False
         self._sampled_motion_ids = torch.arange(self.num_envs).to(self.device)
+
+
         self.create_o3d_viewer()
         return
     
@@ -678,6 +689,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             self.extras['mpjpe'] = (body_pos - motion_res['rg_pos']).norm(dim=-1).mean(dim=-1)
             self.extras['body_pos'] = body_pos.cpu().numpy()
             self.extras['body_pos_gt'] = motion_res['rg_pos'].cpu().numpy()
+            self.extras['body_rot'] = self._rigid_body_rot.cpu().numpy()
 
             #### Dumping dataset
             if self.collect_dataset:
@@ -1110,9 +1122,34 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
 
         if self._occl_training:
             self._update_occl_training()
-
+        
+        # xinpeng added reaction
+        if self.reaction:
+            self._apply_external_interference()
+        
         return
-
+    
+    def _apply_external_interference(self):
+        if self.reaction_mode == 'force':
+            forces  = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
+            torques = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
+            force_tmp = torch.nn.functional.normalize(torch.rand((1, self.num_envs, 3)), dim=-1) * self.external_interference_amplitude
+            no_inter_index = torch.where(torch.rand(self.num_envs) < self.reaction_prob)[0]
+            force_tmp[:, no_inter_index] *= 0.
+            forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
+            self.gym.apply_rigid_body_force_tensors(self.sim, gymtorch.unwrap_tensor(forces), gymtorch.unwrap_tensor(torques), gymapi.ENV_SPACE)
+        elif self.reaction_mode == 'momentum':
+            forces  = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
+            torques = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
+            force_tmp = torch.nn.functional.normalize(torch.ones((1, self.num_envs, 3)), dim=-1) * self.external_interference_amplitude
+            no_inter_index = np.where(np.logical_or(self.progress_buf < 75, self.progress_buf > 175))[0]
+            force_tmp[:, no_inter_index] *= 0.
+            force_tmp[..., 0] *= 1
+            force_tmp[..., 1] *= 1
+            force_tmp[..., 2] *= 0
+            forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
+            self.gym.apply_rigid_body_force_tensors(self.sim, gymtorch.unwrap_tensor(forces), gymtorch.unwrap_tensor(torques), gymapi.ENV_SPACE)
+    
     def _compute_reset(self):
         time = (self.progress_buf) * self.dt + self._motion_start_times + self._motion_start_times_offset # Reset is also called after the progress_buf is updated. 
 

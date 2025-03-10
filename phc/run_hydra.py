@@ -269,7 +269,8 @@ def build_alg_runner(algo_observer):
 def main(cfg_hydra: DictConfig) -> None:
     global cfg_train
     global cfg
-    
+    # print(cfg_hydra)
+    # assert 0
     cfg = EasyDict(OmegaConf.to_container(cfg_hydra, resolve=True))
     
     set_np_formatting()
@@ -314,6 +315,8 @@ def main(cfg_hydra: DictConfig) -> None:
     cfg_train['params']['config']['network_path'] = cfg.output_path
     cfg_train['params']['config']['train_dir'] = cfg.output_path
     cfg_train["params"]["config"]["num_actors"] = cfg.env.num_envs
+    # print(cfg_train["params"])
+    # assert 0
     
     if cfg.epoch > 0:
         cfg_train["params"]["load_checkpoint"] = True
