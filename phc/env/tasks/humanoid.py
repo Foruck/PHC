@@ -730,9 +730,9 @@ class Humanoid(BaseTask):
         else:
             print("Unsupported character config file: {s}".format(asset_file))
             assert (False)
-
+        
         if self.use_fatigue and self.cfg.env.get('MFObs', False):
-            self._num_self_obs += 1
+            self._num_self_obs += len(self._dof_names) * 3
 
         return
 

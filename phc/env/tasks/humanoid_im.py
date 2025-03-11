@@ -1144,7 +1144,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             force_tmp = torch.nn.functional.normalize(torch.ones((1, self.num_envs, 3)), dim=-1) * self.external_interference_amplitude
             no_inter_index = np.where(np.logical_or(self.progress_buf < 75, self.progress_buf > 175))[0]
             force_tmp[:, no_inter_index] *= 0.
-            force_tmp[..., 0] *= 1
+            force_tmp[..., 0] *= 0
             force_tmp[..., 1] *= 1
             force_tmp[..., 2] *= 0
             forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
