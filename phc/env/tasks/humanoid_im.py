@@ -683,24 +683,25 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         super().post_physics_step()
         
         if flags.im_eval:
-            motion_times = (self.progress_buf) * self.dt + self._motion_start_times + self._motion_start_times_offset  # already has time + 1, so don't need to + 1 to get the target for "this frame"
-            motion_res = self._get_state_from_motionlib_cache(self._sampled_motion_ids, motion_times, self._global_offset)  # pass in the env_ids such that the motion is in synced.
+            motion_times = (self.progress_buf) * self.dt + self._motion_start_times + self._motion_start_times_offset
+            motion_res = self._get_state_from_motionlib_cache(self._sampled_motion_ids, motion_times, self._global_offset) 
             body_pos = self._rigid_body_pos
             self.extras['mpjpe'] = (body_pos - motion_res['rg_pos']).norm(dim=-1).mean(dim=-1)
             self.extras['body_pos'] = body_pos.cpu().numpy()
             self.extras['body_pos_gt'] = motion_res['rg_pos'].cpu().numpy()
             self.extras['body_rot'] = self._rigid_body_rot.cpu().numpy()
-
+            
             #### Dumping dataset
             if self.collect_dataset:
                 self.extras['obs_buf'] = self.obs_buf_t.copy()  # n, 945
                 self.extras['actions'] = self.actions.cpu().numpy()  # n, 69
                 self.extras['clean_actions'] = self.clean_actions.cpu().numpy()
                 self.extras['reset_buf'] = self.reset_buf.cpu().numpy()  # n
-
-            
                 self.obs_buf_t = self.obs_buf.cpu().numpy() # update to next time step
-
+            
+            if self.collect_limits:
+                self.extras['limits'] = np.abs(self.intended_torques.cpu().numpy()).max(axis=0)
+            
         return
 
     def _compute_observations(self, env_ids=None):
@@ -1133,9 +1134,12 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         if self.reaction_mode == 'force':
             forces  = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
             torques = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
-            force_tmp = torch.nn.functional.normalize(torch.rand((1, self.num_envs, 3)), dim=-1) * self.external_interference_amplitude
-            no_inter_index = torch.where(torch.rand(self.num_envs) < self.reaction_prob)[0]
+            force_tmp = torch.nn.functional.normalize(torch.ones((1, self.num_envs, 3)), dim=-1) * self.external_interference_amplitude
+            no_inter_index = torch.where(np.logical_or(self.progress_buf < 75, self.progress_buf > 175))[0]
             force_tmp[:, no_inter_index] *= 0.
+            force_tmp[..., 0] *= -1
+            force_tmp[..., 1] *= 0
+            force_tmp[..., 2] *= 0
             forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
             self.gym.apply_rigid_body_force_tensors(self.sim, gymtorch.unwrap_tensor(forces), gymtorch.unwrap_tensor(torques), gymapi.ENV_SPACE)
         elif self.reaction_mode == 'momentum':
@@ -1144,8 +1148,8 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             force_tmp = torch.nn.functional.normalize(torch.ones((1, self.num_envs, 3)), dim=-1) * self.external_interference_amplitude
             no_inter_index = np.where(np.logical_or(self.progress_buf < 75, self.progress_buf > 175))[0]
             force_tmp[:, no_inter_index] *= 0.
-            force_tmp[..., 0] *= 0
-            force_tmp[..., 1] *= 1
+            force_tmp[..., 0] *= -1
+            force_tmp[..., 1] *= 0
             force_tmp[..., 2] *= 0
             forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
             self.gym.apply_rigid_body_force_tensors(self.sim, gymtorch.unwrap_tensor(forces), gymtorch.unwrap_tensor(torques), gymapi.ENV_SPACE)

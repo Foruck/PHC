@@ -3,7 +3,7 @@ import os
 # reaction_idx 从 0 到 23
 reaction_idx_list = list(range(24))
 # amplitude 取 200, 300, 400, 500
-amplitude_list = [200, 300, 400, 500]
+amplitude_list = [300]
 
 for reaction_idx in reaction_idx_list:
     for amplitude in amplitude_list:

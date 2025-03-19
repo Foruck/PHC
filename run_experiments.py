@@ -1,16 +1,13 @@
 import os
 
-# reaction_idx 从 0 到 23
-reaction_idx_list = [1]
-
-# amplitude 取 200, 300, 400, 500
-amplitude_list = [0]
+reaction_idx_list = [0]
+amplitude_list = [300]
 
 for reaction_idx in reaction_idx_list:
     for amplitude in amplitude_list:
         print(f"Running experiment with reaction_idx={reaction_idx} and amplitude={amplitude}...")
         command = f"""
-        CUDA_VISIBLE_DEVICES=7 python phc/run_hydra.py \\
+        CUDA_VISIBLE_DEVICES=4 python phc/run_hydra.py \\
             learning=im_mcp_big \\
             exp_name=phc_comp_3 \\
             env=env_im_getup_mcp_reaction \\
@@ -31,4 +28,4 @@ for reaction_idx in reaction_idx_list:
             env.external_interference_amplitude={amplitude}
         """
         os.system(command)
-        print(f"Experiment with reaction_idx={reaction_idx} and amplitude={amplitude} completed.\n")
+        print(f"Experiment with reaction_idx={reaction_idx} and amplitude-y={amplitude} completed.\n")

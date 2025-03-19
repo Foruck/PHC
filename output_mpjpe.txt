@@ -1,0 +1,688 @@
+Importing module 'gym_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu121
+Device count 1
+/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/src/gymtorch
+ninja: no work to do.
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+Importing module 'rlgpu_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/rlgpu_38.so)
+Not connected to PVD
++++ Using GPU PhysX
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+torch_deterministic: False
+torch_deterministic: False
+torch_deterministic: False
+Setting seed: 0
+Found checkpoint
+output/HumanoidIm/phc_comp_3/Humanoid.pth
+Started to play
+!!!! Using modified SMPL starting pose !!!!
+Humanoid Weights [63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845]
+Bumping Kneel. 
+SIM FPS: 29.999998435378156
+SIM FPS: 29.999998435378156
+
+****************************** Current motion keys ******************************
+Sampling motion: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], device='cuda:0')
+['0-TotalCapture_s1_walking1_poses' '0-TotalCapture_s3_walking1_poses' '0-TotalCapture_s4_walking2_poses' '0-Eyes_Japan_Dataset_aita_walk-21-one leg-aita_poses' '0-Eyes_Japan_Dataset_hamada_walk-06-catwalk-hamada_poses' '0-Eyes_Japan_Dataset_hamada_walk-22-look around-hamada_poses' '0-Eyes_Japan_Dataset_aita_walk-04-fast-aita_poses' '0-Eyes_Japan_Dataset_kaiwa_walk-27-thinking-kaiwa_poses' '0-Eyes_Japan_Dataset_shiono_walk-09-handbag-shiono_poses' '0-Eyes_Japan_Dataset_shiono_walk-10-shoulder bag-shiono_poses' '0-BioMotionLab_NTroje_rub042_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub064_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub077_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub041_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub018_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub085_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub073_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub029_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub092_0023_circle_walk_poses' '0-BioMotionLab_NTroje_rub104_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub027_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub076_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub084_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub060_0028_circle_walk2_poses' '0-BioMotionLab_NTroje_rub098_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub021_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub001_0017_circle_walk_poses' '0-BioMotionLab_NTroje_rub054_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub062_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub017_0027_circle_walk_poses'] .....
+*********************************************************************************
+
+Loaded 256 motions with a total length of 2532.032s and 76217 frames.
+=> loading checkpoint 'output/HumanoidIm/phc_3/Humanoid.pth'
+build mlp: 934
+build mlp: 934
+build mlp: 934
+#################### Generating Fall State ####################
+RL device:  cuda:0
+256
+3
+934
+0
+{'observation_space': Box(-inf, inf, (934,), float32), 'action_space': Box(-1.0, 1.0, (3,), float32), 'agents': 1, 'value_size': 1}
+RunningMeanStd:  (934,)
+build mlp: 934
+build mlp: 934
+build mlp: 1960
+build mlp: 934
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+actor_mlp.4.weight
+actor_mlp.4.bias
+actor_mlp.6.weight
+actor_mlp.6.bias
+actor_mlp.8.weight
+actor_mlp.8.bias
+actor_mlp.10.weight
+actor_mlp.10.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+critic_mlp.4.weight
+critic_mlp.4.bias
+critic_mlp.6.weight
+critic_mlp.6.bias
+critic_mlp.8.weight
+critic_mlp.8.bias
+critic_mlp.10.weight
+critic_mlp.10.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+composer.0.weight
+composer.0.bias
+composer.2.weight
+composer.2.bias
+composer.4.weight
+composer.4.bias
+composer.6.weight
+composer.6.bias
+composer.8.weight
+composer.8.bias
+composer.10.weight
+composer.10.bias
+composer.12.weight
+composer.12.bias
+RunningMeanStd:  (1960,)
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+------------------------------------------
+------------------------------------------
+Success Rate: 1.0000000000
+All:  mpjpe_g: 26.429 	mpjpe_l: 21.742 	mpjpe_pa: 17.218 	accel_dist: 3.208 	vel_dist: 4.637
+output/HumanoidIm/phc_comp_3
+Dumping to:  output/HumanoidIm/phc_comp_3/phc_act/amass_isaac_simple_run_upright_slim/noise_False_0.05_0_0_0.1_momentum.pkl
+Importing module 'gym_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu121
+Device count 1
+/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/src/gymtorch
+ninja: no work to do.
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+Importing module 'rlgpu_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/rlgpu_38.so)
+Not connected to PVD
++++ Using GPU PhysX
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+torch_deterministic: False
+torch_deterministic: False
+torch_deterministic: False
+Setting seed: 0
+Found checkpoint
+output/HumanoidIm/phc_comp_3/Humanoid.pth
+Started to play
+!!!! Using modified SMPL starting pose !!!!
+Humanoid Weights [63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845]
+Bumping Kneel. 
+SIM FPS: 29.999998435378156
+SIM FPS: 29.999998435378156
+
+****************************** Current motion keys ******************************
+Sampling motion: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], device='cuda:0')
+['0-TotalCapture_s1_walking1_poses' '0-TotalCapture_s3_walking1_poses' '0-TotalCapture_s4_walking2_poses' '0-Eyes_Japan_Dataset_aita_walk-21-one leg-aita_poses' '0-Eyes_Japan_Dataset_hamada_walk-06-catwalk-hamada_poses' '0-Eyes_Japan_Dataset_hamada_walk-22-look around-hamada_poses' '0-Eyes_Japan_Dataset_aita_walk-04-fast-aita_poses' '0-Eyes_Japan_Dataset_kaiwa_walk-27-thinking-kaiwa_poses' '0-Eyes_Japan_Dataset_shiono_walk-09-handbag-shiono_poses' '0-Eyes_Japan_Dataset_shiono_walk-10-shoulder bag-shiono_poses' '0-BioMotionLab_NTroje_rub042_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub064_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub077_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub041_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub018_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub085_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub073_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub029_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub092_0023_circle_walk_poses' '0-BioMotionLab_NTroje_rub104_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub027_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub076_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub084_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub060_0028_circle_walk2_poses' '0-BioMotionLab_NTroje_rub098_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub021_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub001_0017_circle_walk_poses' '0-BioMotionLab_NTroje_rub054_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub062_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub017_0027_circle_walk_poses'] .....
+*********************************************************************************
+
+Loaded 256 motions with a total length of 2532.032s and 76217 frames.
+=> loading checkpoint 'output/HumanoidIm/phc_3/Humanoid.pth'
+build mlp: 934
+build mlp: 934
+build mlp: 934
+#################### Generating Fall State ####################
+RL device:  cuda:0
+256
+3
+934
+0
+{'observation_space': Box(-inf, inf, (934,), float32), 'action_space': Box(-1.0, 1.0, (3,), float32), 'agents': 1, 'value_size': 1}
+RunningMeanStd:  (934,)
+build mlp: 934
+build mlp: 934
+build mlp: 1960
+build mlp: 934
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+actor_mlp.4.weight
+actor_mlp.4.bias
+actor_mlp.6.weight
+actor_mlp.6.bias
+actor_mlp.8.weight
+actor_mlp.8.bias
+actor_mlp.10.weight
+actor_mlp.10.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+critic_mlp.4.weight
+critic_mlp.4.bias
+critic_mlp.6.weight
+critic_mlp.6.bias
+critic_mlp.8.weight
+critic_mlp.8.bias
+critic_mlp.10.weight
+critic_mlp.10.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+composer.0.weight
+composer.0.bias
+composer.2.weight
+composer.2.bias
+composer.4.weight
+composer.4.bias
+composer.6.weight
+composer.6.bias
+composer.8.weight
+composer.8.bias
+composer.10.weight
+composer.10.bias
+composer.12.weight
+composer.12.bias
+RunningMeanStd:  (1960,)
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+------------------------------------------
+------------------------------------------
+Success Rate: 1.0000000000
+All:  mpjpe_g: 26.429 	mpjpe_l: 21.742 	mpjpe_pa: 17.218 	accel_dist: 3.208 	vel_dist: 4.637
+output/HumanoidIm/phc_comp_3
+Dumping to:  output/HumanoidIm/phc_comp_3/phc_act/amass_isaac_simple_run_upright_slim/noise_False_0.05_2_0_0.1_momentum.pkl
+Importing module 'gym_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu121
+Device count 1
+/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/src/gymtorch
+ninja: no work to do.
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+Importing module 'rlgpu_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/rlgpu_38.so)
+Not connected to PVD
++++ Using GPU PhysX
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+torch_deterministic: False
+torch_deterministic: False
+torch_deterministic: False
+Setting seed: 0
+Found checkpoint
+output/HumanoidIm/phc_comp_3/Humanoid.pth
+Started to play
+!!!! Using modified SMPL starting pose !!!!
+Humanoid Weights [63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845]
+Bumping Kneel. 
+SIM FPS: 29.999998435378156
+SIM FPS: 29.999998435378156
+
+****************************** Current motion keys ******************************
+Sampling motion: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], device='cuda:0')
+['0-TotalCapture_s1_walking1_poses' '0-TotalCapture_s3_walking1_poses' '0-TotalCapture_s4_walking2_poses' '0-Eyes_Japan_Dataset_aita_walk-21-one leg-aita_poses' '0-Eyes_Japan_Dataset_hamada_walk-06-catwalk-hamada_poses' '0-Eyes_Japan_Dataset_hamada_walk-22-look around-hamada_poses' '0-Eyes_Japan_Dataset_aita_walk-04-fast-aita_poses' '0-Eyes_Japan_Dataset_kaiwa_walk-27-thinking-kaiwa_poses' '0-Eyes_Japan_Dataset_shiono_walk-09-handbag-shiono_poses' '0-Eyes_Japan_Dataset_shiono_walk-10-shoulder bag-shiono_poses' '0-BioMotionLab_NTroje_rub042_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub064_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub077_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub041_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub018_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub085_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub073_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub029_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub092_0023_circle_walk_poses' '0-BioMotionLab_NTroje_rub104_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub027_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub076_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub084_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub060_0028_circle_walk2_poses' '0-BioMotionLab_NTroje_rub098_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub021_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub001_0017_circle_walk_poses' '0-BioMotionLab_NTroje_rub054_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub062_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub017_0027_circle_walk_poses'] .....
+*********************************************************************************
+
+Loaded 256 motions with a total length of 2532.032s and 76217 frames.
+=> loading checkpoint 'output/HumanoidIm/phc_3/Humanoid.pth'
+build mlp: 934
+build mlp: 934
+build mlp: 934
+#################### Generating Fall State ####################
+RL device:  cuda:0
+256
+3
+934
+0
+{'observation_space': Box(-inf, inf, (934,), float32), 'action_space': Box(-1.0, 1.0, (3,), float32), 'agents': 1, 'value_size': 1}
+RunningMeanStd:  (934,)
+build mlp: 934
+build mlp: 934
+build mlp: 1960
+build mlp: 934
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+actor_mlp.4.weight
+actor_mlp.4.bias
+actor_mlp.6.weight
+actor_mlp.6.bias
+actor_mlp.8.weight
+actor_mlp.8.bias
+actor_mlp.10.weight
+actor_mlp.10.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+critic_mlp.4.weight
+critic_mlp.4.bias
+critic_mlp.6.weight
+critic_mlp.6.bias
+critic_mlp.8.weight
+critic_mlp.8.bias
+critic_mlp.10.weight
+critic_mlp.10.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+composer.0.weight
+composer.0.bias
+composer.2.weight
+composer.2.bias
+composer.4.weight
+composer.4.bias
+composer.6.weight
+composer.6.bias
+composer.8.weight
+composer.8.bias
+composer.10.weight
+composer.10.bias
+composer.12.weight
+composer.12.bias
+RunningMeanStd:  (1960,)
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+------------------------------------------
+------------------------------------------
+Success Rate: 1.0000000000
+All:  mpjpe_g: 26.429 	mpjpe_l: 21.742 	mpjpe_pa: 17.218 	accel_dist: 3.208 	vel_dist: 4.637
+output/HumanoidIm/phc_comp_3
+Dumping to:  output/HumanoidIm/phc_comp_3/phc_act/amass_isaac_simple_run_upright_slim/noise_False_0.05_4_0_0.1_momentum.pkl
+Importing module 'gym_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu121
+Device count 1
+/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/src/gymtorch
+ninja: no work to do.
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+Importing module 'rlgpu_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/rlgpu_38.so)
+Not connected to PVD
++++ Using GPU PhysX
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+torch_deterministic: False
+torch_deterministic: False
+torch_deterministic: False
+Setting seed: 0
+Found checkpoint
+output/HumanoidIm/phc_comp_3/Humanoid.pth
+Started to play
+!!!! Using modified SMPL starting pose !!!!
+Humanoid Weights [63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845]
+Bumping Kneel. 
+SIM FPS: 29.999998435378156
+SIM FPS: 29.999998435378156
+
+****************************** Current motion keys ******************************
+Sampling motion: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], device='cuda:0')
+['0-TotalCapture_s1_walking1_poses' '0-TotalCapture_s3_walking1_poses' '0-TotalCapture_s4_walking2_poses' '0-Eyes_Japan_Dataset_aita_walk-21-one leg-aita_poses' '0-Eyes_Japan_Dataset_hamada_walk-06-catwalk-hamada_poses' '0-Eyes_Japan_Dataset_hamada_walk-22-look around-hamada_poses' '0-Eyes_Japan_Dataset_aita_walk-04-fast-aita_poses' '0-Eyes_Japan_Dataset_kaiwa_walk-27-thinking-kaiwa_poses' '0-Eyes_Japan_Dataset_shiono_walk-09-handbag-shiono_poses' '0-Eyes_Japan_Dataset_shiono_walk-10-shoulder bag-shiono_poses' '0-BioMotionLab_NTroje_rub042_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub064_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub077_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub041_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub018_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub085_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub073_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub029_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub092_0023_circle_walk_poses' '0-BioMotionLab_NTroje_rub104_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub027_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub076_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub084_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub060_0028_circle_walk2_poses' '0-BioMotionLab_NTroje_rub098_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub021_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub001_0017_circle_walk_poses' '0-BioMotionLab_NTroje_rub054_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub062_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub017_0027_circle_walk_poses'] .....
+*********************************************************************************
+
+Loaded 256 motions with a total length of 2532.032s and 76217 frames.
+=> loading checkpoint 'output/HumanoidIm/phc_3/Humanoid.pth'
+build mlp: 934
+build mlp: 934
+build mlp: 934
+#################### Generating Fall State ####################
+RL device:  cuda:0
+256
+3
+934
+0
+{'observation_space': Box(-inf, inf, (934,), float32), 'action_space': Box(-1.0, 1.0, (3,), float32), 'agents': 1, 'value_size': 1}
+RunningMeanStd:  (934,)
+build mlp: 934
+build mlp: 934
+build mlp: 1960
+build mlp: 934
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+actor_mlp.4.weight
+actor_mlp.4.bias
+actor_mlp.6.weight
+actor_mlp.6.bias
+actor_mlp.8.weight
+actor_mlp.8.bias
+actor_mlp.10.weight
+actor_mlp.10.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+critic_mlp.4.weight
+critic_mlp.4.bias
+critic_mlp.6.weight
+critic_mlp.6.bias
+critic_mlp.8.weight
+critic_mlp.8.bias
+critic_mlp.10.weight
+critic_mlp.10.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+composer.0.weight
+composer.0.bias
+composer.2.weight
+composer.2.bias
+composer.4.weight
+composer.4.bias
+composer.6.weight
+composer.6.bias
+composer.8.weight
+composer.8.bias
+composer.10.weight
+composer.10.bias
+composer.12.weight
+composer.12.bias
+RunningMeanStd:  (1960,)
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+------------------------------------------
+------------------------------------------
+Success Rate: 1.0000000000
+All:  mpjpe_g: 26.429 	mpjpe_l: 21.742 	mpjpe_pa: 17.218 	accel_dist: 3.208 	vel_dist: 4.637
+output/HumanoidIm/phc_comp_3
+Dumping to:  output/HumanoidIm/phc_comp_3/phc_act/amass_isaac_simple_run_upright_slim/noise_False_0.05_13_0_0.1_momentum.pkl
+Importing module 'gym_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu121
+Device count 1
+/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/src/gymtorch
+ninja: no work to do.
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+Importing module 'rlgpu_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/rlgpu_38.so)
+Not connected to PVD
++++ Using GPU PhysX
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+torch_deterministic: False
+torch_deterministic: False
+torch_deterministic: False
+Setting seed: 0
+Found checkpoint
+output/HumanoidIm/phc_comp_3/Humanoid.pth
+Started to play
+!!!! Using modified SMPL starting pose !!!!
+Humanoid Weights [63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845]
+Bumping Kneel. 
+SIM FPS: 29.999998435378156
+SIM FPS: 29.999998435378156
+
+****************************** Current motion keys ******************************
+Sampling motion: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], device='cuda:0')
+['0-TotalCapture_s1_walking1_poses' '0-TotalCapture_s3_walking1_poses' '0-TotalCapture_s4_walking2_poses' '0-Eyes_Japan_Dataset_aita_walk-21-one leg-aita_poses' '0-Eyes_Japan_Dataset_hamada_walk-06-catwalk-hamada_poses' '0-Eyes_Japan_Dataset_hamada_walk-22-look around-hamada_poses' '0-Eyes_Japan_Dataset_aita_walk-04-fast-aita_poses' '0-Eyes_Japan_Dataset_kaiwa_walk-27-thinking-kaiwa_poses' '0-Eyes_Japan_Dataset_shiono_walk-09-handbag-shiono_poses' '0-Eyes_Japan_Dataset_shiono_walk-10-shoulder bag-shiono_poses' '0-BioMotionLab_NTroje_rub042_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub064_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub077_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub041_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub018_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub085_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub073_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub029_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub092_0023_circle_walk_poses' '0-BioMotionLab_NTroje_rub104_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub027_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub076_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub084_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub060_0028_circle_walk2_poses' '0-BioMotionLab_NTroje_rub098_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub021_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub001_0017_circle_walk_poses' '0-BioMotionLab_NTroje_rub054_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub062_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub017_0027_circle_walk_poses'] .....
+*********************************************************************************
+
+Loaded 256 motions with a total length of 2532.032s and 76217 frames.
+=> loading checkpoint 'output/HumanoidIm/phc_3/Humanoid.pth'
+build mlp: 934
+build mlp: 934
+build mlp: 934
+#################### Generating Fall State ####################
+RL device:  cuda:0
+256
+3
+934
+0
+{'observation_space': Box(-inf, inf, (934,), float32), 'action_space': Box(-1.0, 1.0, (3,), float32), 'agents': 1, 'value_size': 1}
+RunningMeanStd:  (934,)
+build mlp: 934
+build mlp: 934
+build mlp: 1960
+build mlp: 934
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+actor_mlp.4.weight
+actor_mlp.4.bias
+actor_mlp.6.weight
+actor_mlp.6.bias
+actor_mlp.8.weight
+actor_mlp.8.bias
+actor_mlp.10.weight
+actor_mlp.10.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+critic_mlp.4.weight
+critic_mlp.4.bias
+critic_mlp.6.weight
+critic_mlp.6.bias
+critic_mlp.8.weight
+critic_mlp.8.bias
+critic_mlp.10.weight
+critic_mlp.10.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+composer.0.weight
+composer.0.bias
+composer.2.weight
+composer.2.bias
+composer.4.weight
+composer.4.bias
+composer.6.weight
+composer.6.bias
+composer.8.weight
+composer.8.bias
+composer.10.weight
+composer.10.bias
+composer.12.weight
+composer.12.bias
+RunningMeanStd:  (1960,)
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+------------------------------------------
+------------------------------------------
+Success Rate: 1.0000000000
+All:  mpjpe_g: 26.429 	mpjpe_l: 21.742 	mpjpe_pa: 17.218 	accel_dist: 3.208 	vel_dist: 4.637
+output/HumanoidIm/phc_comp_3
+Dumping to:  output/HumanoidIm/phc_comp_3/phc_act/amass_isaac_simple_run_upright_slim/noise_False_0.05_15_0_0.1_momentum.pkl
+Importing module 'gym_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu121
+Device count 1
+/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/src/gymtorch
+ninja: no work to do.
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+MOVING MOTION DATA TO GPU, USING CACHE: False
+Importing module 'rlgpu_38' (/hdd/xinpeng/isaacgym/python/isaacgym/_bindings/linux-x86_64/rlgpu_38.so)
+Not connected to PVD
++++ Using GPU PhysX
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+/buildAgent/work/99bede84aa0a52c2/source/gpucommon/src/PxgCudaMemoryAllocator.cpp (59) : warning : Failed to allocate pinned memory.
+
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+torch_deterministic: False
+torch_deterministic: False
+torch_deterministic: False
+Setting seed: 0
+Found checkpoint
+output/HumanoidIm/phc_comp_3/Humanoid.pth
+Started to play
+!!!! Using modified SMPL starting pose !!!!
+Humanoid Weights [63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845, 63.313948929309845]
+Bumping Kneel. 
+SIM FPS: 29.999998435378156
+SIM FPS: 29.999998435378156
+
+****************************** Current motion keys ******************************
+Sampling motion: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], device='cuda:0')
+['0-TotalCapture_s1_walking1_poses' '0-TotalCapture_s3_walking1_poses' '0-TotalCapture_s4_walking2_poses' '0-Eyes_Japan_Dataset_aita_walk-21-one leg-aita_poses' '0-Eyes_Japan_Dataset_hamada_walk-06-catwalk-hamada_poses' '0-Eyes_Japan_Dataset_hamada_walk-22-look around-hamada_poses' '0-Eyes_Japan_Dataset_aita_walk-04-fast-aita_poses' '0-Eyes_Japan_Dataset_kaiwa_walk-27-thinking-kaiwa_poses' '0-Eyes_Japan_Dataset_shiono_walk-09-handbag-shiono_poses' '0-Eyes_Japan_Dataset_shiono_walk-10-shoulder bag-shiono_poses' '0-BioMotionLab_NTroje_rub042_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub064_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub077_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub041_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub018_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub085_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub073_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub029_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub092_0023_circle_walk_poses' '0-BioMotionLab_NTroje_rub104_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub027_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub076_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub084_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub060_0028_circle_walk2_poses' '0-BioMotionLab_NTroje_rub098_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub021_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub001_0017_circle_walk_poses' '0-BioMotionLab_NTroje_rub054_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub062_0027_circle_walk_poses' '0-BioMotionLab_NTroje_rub017_0027_circle_walk_poses'] .....
+*********************************************************************************
+
+Loaded 256 motions with a total length of 2532.032s and 76217 frames.
+=> loading checkpoint 'output/HumanoidIm/phc_3/Humanoid.pth'
+build mlp: 934
+build mlp: 934
+build mlp: 934
+#################### Generating Fall State ####################
+RL device:  cuda:0
+256
+3
+934
+0
+{'observation_space': Box(-inf, inf, (934,), float32), 'action_space': Box(-1.0, 1.0, (3,), float32), 'agents': 1, 'value_size': 1}
+RunningMeanStd:  (934,)
+build mlp: 934
+build mlp: 934
+build mlp: 1960
+build mlp: 934
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+actor_mlp.4.weight
+actor_mlp.4.bias
+actor_mlp.6.weight
+actor_mlp.6.bias
+actor_mlp.8.weight
+actor_mlp.8.bias
+actor_mlp.10.weight
+actor_mlp.10.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+critic_mlp.4.weight
+critic_mlp.4.bias
+critic_mlp.6.weight
+critic_mlp.6.bias
+critic_mlp.8.weight
+critic_mlp.8.bias
+critic_mlp.10.weight
+critic_mlp.10.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+composer.0.weight
+composer.0.bias
+composer.2.weight
+composer.2.bias
+composer.4.weight
+composer.4.bias
+composer.6.weight
+composer.6.bias
+composer.8.weight
+composer.8.bias
+composer.10.weight
+composer.10.bias
+composer.12.weight
+composer.12.bias
+RunningMeanStd:  (1960,)
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+=> loading checkpoint 'output/HumanoidIm/phc_comp_3/Humanoid.pth'
+------------------------------------------
+------------------------------------------
+Success Rate: 1.0000000000
+All:  mpjpe_g: 26.429 	mpjpe_l: 21.742 	mpjpe_pa: 17.218 	accel_dist: 3.208 	vel_dist: 4.637
+output/HumanoidIm/phc_comp_3
+Dumping to:  output/HumanoidIm/phc_comp_3/phc_act/amass_isaac_simple_run_upright_slim/noise_False_0.05_18_0_0.1_momentum.pkl
+Running experiment with reaction_idx=0 and amplitude=0...
+Experiment with reaction_idx=0 and amplitude-y=0 completed.
+
+Running experiment with reaction_idx=2 and amplitude=0...
+Experiment with reaction_idx=2 and amplitude-y=0 completed.
+
+Running experiment with reaction_idx=4 and amplitude=0...
+Experiment with reaction_idx=4 and amplitude-y=0 completed.
+
+Running experiment with reaction_idx=13 and amplitude=0...
+Experiment with reaction_idx=13 and amplitude-y=0 completed.
+
+Running experiment with reaction_idx=15 and amplitude=0...
+Experiment with reaction_idx=15 and amplitude-y=0 completed.
+
+Running experiment with reaction_idx=18 and amplitude=0...
+Experiment with reaction_idx=18 and amplitude-y=0 completed.
+

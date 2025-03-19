@@ -22,6 +22,24 @@ from datetime import datetime
 import copy
 COLLECT_Z = False
 
+class metricDict:
+    def __init__(self, initial=None):
+        
+        self.metric = initial
+        self.cnt    = 0
+    
+    def update(self, value, cnt=1):
+        if self.metric is None:
+            self.metric = {k: value[k].mean() for k in value.keys()}
+            self.cnt    = cnt
+        else:
+            for k in self.metric.keys():
+                self.metric[k] = (self.metric[k] * self.cnt + value[k].mean() * cnt) / (self.cnt + cnt)
+            self.cnt += cnt
+            
+    def items(self):
+        return self.metric.items()
+
 class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
     def __init__(self, config):
         super().__init__(config)
@@ -33,6 +51,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
         self.gt_pos, self.gt_pos_all = [], []
         self.pred_pos, self.pred_pos_all = [], []
         self.pred_rot, self.pred_rot_all = [], []
+        self.metric_dict, succ_metric_dict = metricDict(), metricDict()
         self.curr_stpes = 0
 
         if COLLECT_Z:
@@ -50,6 +69,9 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
             self.keys_all = []
             self.reset_buf, self.reset_buf_all = [], []
 
+        if humanoid_env.collect_limits:
+            self.torque_limits = np.zeros(humanoid_env.num_dof)
+            
         if flags.im_eval:
             self.success_rate = 0
             self.pbar = tqdm(range(humanoid_env._motion_lib._num_unique_motions // humanoid_env.num_envs))
@@ -98,6 +120,9 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 self.clean_actions.append(info['clean_actions'])
                 self.env_actions.append(info['actions'])
                 self.reset_buf.append(info['reset_buf'])
+            
+            if humanoid_env.collect_limits:
+                self.torque_limits = np.maximum(self.torque_limits, info['limits'])
 
             self.mpjpe.append(info["mpjpe"])
             self.gt_pos.append(info["body_pos_gt"])
@@ -154,47 +179,48 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
 
                     self.motion_length_all += [obs.shape[0] for obs in all_obs_buf]
 
-                self.mpjpe_all.append(all_mpjpe)
-                self.pred_pos_all += all_body_pos_pred
-                self.gt_pos_all += all_body_pos_gt
-                self.pred_rot_all += all_body_rot_pred
-                
+                    self.mpjpe_all.append(all_mpjpe)
+                    self.pred_pos_all += all_body_pos_pred
+                    self.gt_pos_all   += all_body_pos_gt
+                    self.pred_rot_all += all_body_rot_pred
+                metrics = compute_metrics_lite(all_body_pos_pred, all_body_pos_gt)
+                self.metric_dict.update(metrics, metrics['mpjpe_g'].size)
 
                 if (humanoid_env.start_idx + humanoid_env.num_envs >= humanoid_env._motion_lib._num_unique_motions):
                     terminate_hist = np.concatenate(self.terminate_memory)
                     succ_idxes = np.nonzero(~terminate_hist[: humanoid_env._motion_lib._num_unique_motions])[0].tolist()
 
-                    pred_pos_all_succ = [(self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions])[i] for i in succ_idxes]
-                    gt_pos_all_succ = [(self.gt_pos_all[: humanoid_env._motion_lib._num_unique_motions])[i] for i in succ_idxes]
+                    # pred_pos_all_succ = [(self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions])[i] for i in succ_idxes]
+                    # gt_pos_all_succ = [(self.gt_pos_all[: humanoid_env._motion_lib._num_unique_motions])[i] for i in succ_idxes]
 
-                    pred_pos_all = self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions]
-                    gt_pos_all = self.gt_pos_all[:humanoid_env._motion_lib._num_unique_motions]
 
+                    # pred_pos_all = self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions]
+                    # gt_pos_all = self.gt_pos_all[:humanoid_env._motion_lib._num_unique_motions]
                     # np.sum([i.shape[0] for i in self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions]])
                     # humanoid_env._motion_lib.get_motion_num_steps().sum()
 
                     failed_keys = humanoid_env._motion_lib._motion_data_keys[terminate_hist[: humanoid_env._motion_lib._num_unique_motions]]
                     success_keys = humanoid_env._motion_lib._motion_data_keys[~terminate_hist[: humanoid_env._motion_lib._num_unique_motions]]
                     # print("failed", humanoid_env._motion_lib._motion_data_keys[np.concatenate(self.terminate_memory)[:humanoid_env._motion_lib._num_unique_motions]])
-                    if flags.real_traj:
-                        pred_pos_all = [i[:, humanoid_env._reset_bodies_id] for i in pred_pos_all]
-                        gt_pos_all = [i[:, humanoid_env._reset_bodies_id] for i in gt_pos_all]
-                        pred_pos_all_succ = [i[:, humanoid_env._reset_bodies_id] for i in pred_pos_all_succ]
-                        gt_pos_all_succ = [i[:, humanoid_env._reset_bodies_id] for i in gt_pos_all_succ]
+                    # if flags.real_traj:
+                    #     pred_pos_all = [i[:, humanoid_env._reset_bodies_id] for i in pred_pos_all]
+                    #     gt_pos_all = [i[:, humanoid_env._reset_bodies_id] for i in gt_pos_all]
+                    #     pred_pos_all_succ = [i[:, humanoid_env._reset_bodies_id] for i in pred_pos_all_succ]
+                    #     gt_pos_all_succ = [i[:, humanoid_env._reset_bodies_id] for i in gt_pos_all_succ]
                         
                         
                         
-                    metrics = compute_metrics_lite(pred_pos_all, gt_pos_all)
-                    metrics_succ = compute_metrics_lite(pred_pos_all_succ, gt_pos_all_succ)
+                    # metrics = compute_metrics_lite(pred_pos_all, gt_pos_all)
+                    # metrics_succ = compute_metrics_lite(pred_pos_all_succ, gt_pos_all_succ)
 
-                    metrics_all_print = {m: np.mean(v) for m, v in metrics.items()}
-                    metrics_print = {m: np.mean(v) for m, v in metrics_succ.items()}
+                    # metrics_all_print = {m: np.mean(v) for m, v in metrics.items()}
+                    # metrics_print = {m: np.mean(v) for m, v in metrics_succ.items()}
 
                     print("------------------------------------------")
                     print("------------------------------------------")
                     print(f"Success Rate: {self.success_rate:.10f}")
-                    print("All: ", " \t".join([f"{k}: {v:.3f}" for k, v in metrics_all_print.items()]))
-                    print("Succ: "," \t".join([f"{k}: {v:.3f}" for k, v in metrics_print.items()]))
+                    print("All: ", " \t".join([f"{k}: {v:.3f}" for k, v in self.metric_dict.items()]))
+                    # print("Succ: "," \t".join([f"{k}: {v:.3f}" for k, v in metrics_print.items()]))
                     # print(1 - self.terminate_state.sum() / self.terminate_state.shape[0])
                     print(self.config['network_path'])
                     if COLLECT_Z:
@@ -208,25 +234,32 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                         os.makedirs(osp.join(self.config['network_path'], "phc_act", motion_file), exist_ok=True)
                         print("Dumping to: ", dump_dir)
                         joblib.dump({
-                                "obs": self.obs_buf_all, 
-                                "gt_pos": self.gt_pos_all,
-                                'pred_pos': self.pred_pos_all,
-                                'pred_rot': self.pred_rot_all,
-                                "clean_action": self.clean_actions_all, 
-                                "env_action": self.actions_all,
-                                "key_names": np.array(self.keys_all),
-                                "motion_lengths": np.array(self.motion_length_all),
-                                "reset": np.concatenate(self.reset_buf_all), 
+                                "obs": self.obs_buf_all[:humanoid_env._motion_lib._num_unique_motions], 
+                                "gt_pos": self.gt_pos_all[:humanoid_env._motion_lib._num_unique_motions],
+                                'pred_pos': self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions],
+                                'pred_rot': self.pred_rot_all[:humanoid_env._motion_lib._num_unique_motions],
+                                "clean_action": self.clean_actions_all[:humanoid_env._motion_lib._num_unique_motions], 
+                                "env_action": self.actions_all[:humanoid_env._motion_lib._num_unique_motions],
+                                "key_names": np.array(self.keys_all[:humanoid_env._motion_lib._num_unique_motions]),
+                                "motion_lengths": np.array(self.motion_length_all[:humanoid_env._motion_lib._num_unique_motions]),
+                                "reset": np.concatenate(self.reset_buf_all[:humanoid_env._motion_lib._num_unique_motions]), 
                                 "running_mean": self.running_mean_std.state_dict(),
                                 "config": humanoid_env.cfg,
                                 }, dump_dir, compress=True)
                         exit()
-
-                    import ipdb; ipdb.set_trace()
+                    
+                    if humanoid_env.collect_limits:
+                        dump_dir = osp.join(self.config['network_path'], f'torque_limits.pkl')
+                        joblib.dump({
+                            'known_peaks': self.torque_limits,
+                        }, dump_dir)
+                    
+                    # import ipdb; ipdb.set_trace()
 
                     joblib.dump(failed_keys, osp.join(self.config['network_path'], "failed.pkl"))
                     joblib.dump(success_keys, osp.join(self.config['network_path'], "long_succ.pkl"))
                     print("....")
+                    exit()
 
                 done[:] = 1  # Turning all of the sequences done and reset for the next batch of eval.
 
@@ -237,7 +270,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
 
                 self.pbar.update(1)
                 self.pbar.refresh()
-                self.mpjpe, self.gt_pos, self.pred_pos,  = [], [], []
+                self.mpjpe, self.gt_pos, self.pred_pos, self.pred_rot = [], [], [], []
                 if humanoid_env.collect_dataset: 
                     self.obs_buf, self.env_actions, self.clean_actions, self.reset_buf, self.keys = [], [], [], [], []
                 if COLLECT_Z: self.zs = []

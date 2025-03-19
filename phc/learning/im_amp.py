@@ -122,7 +122,6 @@ class IMAmpAgent(amp_agent.AMPAgent):
             self.states = [torch.zeros((s.size()[0], self.vec_env.env.task.num_envs, s.size(
             )[2]), dtype=torch.float32).to(self.device) for s in rnn_states]
             
-            
     def update_training_data(self, failed_keys):
         humanoid_env = self.vec_env.env.task
         if humanoid_env.auto_pmcp:
@@ -130,8 +129,6 @@ class IMAmpAgent(amp_agent.AMPAgent):
         elif humanoid_env.auto_pmcp_soft:
             humanoid_env._motion_lib.update_soft_sampling_weight(failed_keys)
         joblib.dump({"failed_keys": failed_keys, "termination_history": humanoid_env._motion_lib._termination_history}, osp.join(self.network_path, f"failed_{self.epoch_num:010d}.pkl"))
-        
-        
         
     def eval(self):
         print("############################ Evaluation ############################")
@@ -280,7 +277,7 @@ class IMAmpAgent(amp_agent.AMPAgent):
             # MPJPE
             all_mpjpe = torch.stack(self.mpjpe)
             assert(all_mpjpe.shape[0] == curr_max or self.terminate_state.sum() == humanoid_env.num_envs) # Max should be the same as the number of frames in the motion.
-            all_mpjpe = [all_mpjpe[:(i - 1), idx].mean() for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
+            all_mpjpe = [all_mpjpe[:max(75, i - 1): min(175, i - 1), idx].mean() for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
             all_body_pos_pred = np.stack(self.pred_pos)
             all_body_pos_pred = [all_body_pos_pred[:(i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
             all_body_pos_gt = np.stack(self.gt_pos)
@@ -356,7 +353,7 @@ class IMAmpAgent(amp_agent.AMPAgent):
             self.pbar.refresh()
             self.mpjpe, self.gt_pos, self.pred_pos,  = [], [], []
 
-
+        
         update_str = f"Terminated: {self.terminate_state.sum().item()} | max frames: {curr_max} | steps {self.curr_stpes} | Start: {humanoid_env.start_idx} | Succ rate: {self.success_rate:.3f} | Mpjpe: {np.mean(self.mpjpe_all) * 1000:.3f}"
         self.pbar.set_description(update_str)
 

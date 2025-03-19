@@ -349,6 +349,10 @@ class Humanoid(BaseTask):
         self.collect_dataset = cfg.get("collect_dataset", False)
         self.mlp_bypass = cfg["env"].get("mlp_bypass", False)
         
+        #################### Collect Fatigue Limits ##############
+        self.collect_limits = cfg['env'].get('collect_limits', False)
+        #################### Collect Fatigue Limits ##############
+        
     def load_smpl_configs(self, cfg):
         self.load_common_humanoid_configs(cfg)
         
@@ -555,7 +559,13 @@ class Humanoid(BaseTask):
         self.F  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigueF', 1.)
         self.r  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigue_r', 1.)
         self.R  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigueR', 0.01)
-        self.known_peaks = torch.tensor(FORCE_MAXES, device=self.device, requires_grad=False)
+        if self.cfg.env.get('peak_path', False):
+            self.known_peaks = torch.from_numpy(joblib.load(self.cfg.env.get('peak_path', False))['known_peaks'])[None].to(self.device)
+            self.known_peaks.requires_grad = False
+            # raise NotImplementedError
+            # self.known_peaks = torch.tensor(FORCE_MAXES, device=self.device, requires_grad=False)
+        else:
+            self.known_peaks = None
 
     def reset(self, env_ids=None):
         safe_reset = (env_ids is None) or len(env_ids) == self.num_envs
@@ -1613,7 +1623,7 @@ class Humanoid(BaseTask):
                 self.torques = intended_torques
                 self.intended_torques = intended_torques
 
-                if self.use_fatigue:
+                if self.use_fatigue and self.known_peaks is not None:
                     clipped_intended_torques = torch.clip(intended_torques, -self.known_peaks, self.known_peaks)
                     if self.randomized_fatigue:
                         self.MR[:, :] = Uniform(0, 100).sample(self.MR.shape).to(self.device)

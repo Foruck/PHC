@@ -238,7 +238,7 @@ if __name__ == "__main__":
     parser.add_argument("--metadata_path", type=str, default="")
     parser.add_argument("--output_path", type=str, default="")
     parser.add_argument("--sample_pkl", type=bool, default=False)
-    parser.add_argument("--ckpt_path", type=str, default="01600.pth")
+    parser.add_argument("--ckpt_path", type=str, default="0.pth")
     args = parser.parse_args()
     
     dataset_path = args.dataset_path
