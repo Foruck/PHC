@@ -549,9 +549,9 @@ class Humanoid(BaseTask):
 
     def init_fatigue(self):
         self.num3CC = 1
-        self.MF = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.MF = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False) + self.cfg['env'].get('MF_init', 0.)
         self.MA = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
-        self.MR = torch.ones(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
+        self.MR = torch.ones(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False) - self.cfg['env'].get('MF_init', 0.)
         self.TL = torch.zeros(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
         self.RC = torch.ones(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
         self.LD = self.cfg['env'].get('LD', 10.)

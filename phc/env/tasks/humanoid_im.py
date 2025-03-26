@@ -35,6 +35,7 @@ import copy
 class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
 
     def __init__(self, cfg, sim_params, physics_engine, device_type, device_id, headless):
+        self.far_target = cfg['env'].get('far_target', False)
         self._full_body_reward = cfg["env"].get("full_body_reward", True)
         self._fut_tracks = cfg["env"].get("fut_tracks", False)
         self._fut_tracks_dropout = cfg["env"].get("fut_tracks_dropout", False)
@@ -759,9 +760,12 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             motion_times_steps = ((self.progress_buf[env_ids, None] + 1) * self.dt + time_internals + self._motion_start_times[env_ids, None] + self._motion_start_times_offset[env_ids, None]).flatten()  # Next frame, so +1
             env_ids_steps = self._sampled_motion_ids[env_ids].repeat_interleave(time_steps)
             motion_res = self._get_state_from_motionlib_cache(env_ids_steps, motion_times_steps, self._global_offset[env_ids].repeat_interleave(time_steps, dim=0).view(-1, 3))  # pass in the env_ids such that the motion is in synced.
-
         else:
-            motion_times = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids]  # Next frame, so +1
+            if self.far_target:
+                motion_times = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids] + np.random.random() * 3. + 3.
+                motion_times = torch.minimum(motion_times, self._motion_lib._motion_lengths[env_ids])
+            else:
+                motion_times = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids]  # Next frame, so +1
             time_steps = 1
             motion_res = self._get_state_from_motionlib_cache(self._sampled_motion_ids[env_ids], motion_times, self._global_offset[env_ids])  # pass in the env_ids such that the motion is in synced.
 
@@ -783,7 +787,6 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
 
         if self.obs_v == 1 :
             obs = compute_imitation_observations(root_pos, root_rot, body_pos_subset, body_rot_subset, body_vel_subset, body_ang_vel_subset, ref_rb_pos_subset, ref_rb_rot_subset, ref_body_vel_subset, ref_body_ang_vel_subset, time_steps, self._has_upright_start)
-
         elif self.obs_v == 2:
             ref_dof_pos_subset = ref_dof_pos.reshape(-1, len(self._dof_names), 3)[..., self._track_bodies_id[1:] - 1, :]  # Remove root from dof dim
             dof_pos_subset = self._dof_pos[env_ids].reshape(-1, len(self._dof_names), 3)[..., self._track_bodies_id[1:] - 1, :]
