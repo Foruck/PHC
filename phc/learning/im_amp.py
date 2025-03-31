@@ -39,7 +39,6 @@ from tqdm import tqdm
 class IMAmpAgent(amp_agent.AMPAgent):
     def __init__(self, base_name, config):
         super().__init__(base_name, config)
-        
 
     def get_action(self, obs_dict, is_determenistic=False):
         obs = obs_dict["obs"]

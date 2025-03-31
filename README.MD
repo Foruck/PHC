@@ -424,3 +424,19 @@ This repository is built on top of the following amazing repositories:
 * SMPL models and layer is from: [SMPL-X model](https://github.com/vchoutas/smplx)
 
 Please follow the lisence of the above repositories for usage. 
+
+## Fatigue-related commands
+
+- Fatigue Evaluation
+
+  ``CUDA_VISIBLE_DEVICES=2 python phc/run_hydra.py learning=im_big exp_name=fatigue_20data env=env_im_fatigue robot=smpl_humanoid env.motion_file=data/amass/pkls/amass_isaac_im_train_take6_upright_slim.pkl env.num_envs=1536 headless=True env.randomized_fatigue=False test=True im_eval=True +env.models=\['output/HumanoidIm/fatigue_20data/Humanoid_000030000.pth'\] epoch=30000``
+
+- Baseline Evaluation
+
+  ``CUDA_VISIBLE_DEVICES=2 python phc/run_hydra.py learning=im_big exp_name=baseline_20data env=env_im robot=smpl_humanoid env.motion_file=data/amass/pkls/amass_isaac_im_train_take6_upright_slim.pkl env.num_envs=1536 headless=True test=True im_eval=True +env.models=\['output/HumanoidIm/baseline_20data/Humanoid_000030000.pth'\] epoch=30000``
+
+- Fatigue training
+  ``CUDA_VISIBLE_DEVICES=2 python phc/run_hydra.py learning=im_big exp_name=fatigue_20data env=env_im_fatigue robot=smpl_humanoid env.motion_file=data/amass/pkls/amass_isaac_im_train_take6_upright_slim.pkl env.num_envs=1536 headless=True env.randomized_fatigue=True``
+
+- Baseline training
+  ``CUDA_VISIBLE_DEVICES=2 python phc/run_hydra.py learning=im_big exp_name=fatigue_20data env=env_im robot=smpl_humanoid env.motion_file=data/amass/pkls/amass_isaac_im_train_take6_upright_slim.pkl env.num_envs=1536 headless=True``

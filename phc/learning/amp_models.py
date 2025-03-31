@@ -39,6 +39,10 @@ class ModelAMPContinuous(ModelA2CContinuousLogStd):
                 disc_demo_logit = self.a2c_network.eval_disc(amp_demo_obs)
                 result["disc_demo_logit"] = disc_demo_logit
 
+                if input_dict.get('expert_action', False):
+                    result['prior_mu'], result['prior_logvar'] = self.a2c_network.compute_prior(input_dict)
+                    result.update(self.a2c_network.eval_z(input_dict)[1])
+
                 # # HACK....
                 # if input_dict.get("compute_direct_logit", False):
                 #     from phc.utils.torch_utils import project_to_norm

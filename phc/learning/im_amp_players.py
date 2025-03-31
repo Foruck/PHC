@@ -149,6 +149,8 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 all_body_pos_pred = [all_body_pos_pred[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
                 all_body_pos_gt = np.stack(self.gt_pos)
                 all_body_pos_gt = [all_body_pos_gt[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
+                
+
                 all_body_rot_pred = np.stack(self.pred_rot)
                 all_body_rot_pred = [all_body_rot_pred[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
 

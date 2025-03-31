@@ -1,0 +1,1800 @@
+left
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 3.6592
+mpjpe_l: 2.1138
+mpjpe_pa: 1.6149
+accel_dist: 0.5642
+vel_dist: 0.6512
+
+Key: 100
+mpjpe_g: 8.6735
+mpjpe_l: 4.4876
+mpjpe_pa: 3.4541
+accel_dist: 0.9419
+vel_dist: 1.2331
+
+Key: 150
+mpjpe_g: 17.4016
+mpjpe_l: 8.213
+mpjpe_pa: 6.4428
+accel_dist: 1.4752
+vel_dist: 2.069
+
+Key: 200
+mpjpe_g: 44.2677
+mpjpe_l: 14.7107
+mpjpe_pa: 11.0555
+accel_dist: 2.5718
+vel_dist: 3.5934
+
+Key: 250
+mpjpe_g: 150.4043
+mpjpe_l: 29.2564
+mpjpe_pa: 18.9949
+accel_dist: 6.2878
+vel_dist: 7.8829
+
+Key: 300
+mpjpe_g: 68.2263
+mpjpe_l: 20.6437
+mpjpe_pa: 16.4044
+accel_dist: 5.327
+vel_dist: 6.0806
+
+Key: 400
+mpjpe_g: 228.9596
+mpjpe_l: 41.75
+mpjpe_pa: 29.1093
+accel_dist: 10.9266
+vel_dist: 11.905
+
+Key: 350
+mpjpe_g: 155.7173
+mpjpe_l: 27.4721
+mpjpe_pa: 19.5687
+accel_dist: 11.4227
+vel_dist: 10.3145
+
+Key: 450
+mpjpe_g: 395.677
+mpjpe_l: 41.7624
+mpjpe_pa: 27.6424
+accel_dist: 23.9687
+vel_dist: 19.4085
+
+Key: 500
+mpjpe_g: 524.1759
+mpjpe_l: 52.1043
+mpjpe_pa: 32.3361
+accel_dist: 28.046
+vel_dist: 23.2076
+backward
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 3.6657
+mpjpe_l: 2.1662
+mpjpe_pa: 1.708
+accel_dist: 0.5744
+vel_dist: 0.6645
+
+Key: 100
+mpjpe_g: 8.1828
+mpjpe_l: 4.4597
+mpjpe_pa: 3.5732
+accel_dist: 0.9907
+vel_dist: 1.2697
+
+Key: 150
+mpjpe_g: 14.5935
+mpjpe_l: 7.2084
+mpjpe_pa: 5.8558
+accel_dist: 1.4814
+vel_dist: 1.9834
+
+Key: 200
+mpjpe_g: 26.7115
+mpjpe_l: 10.863
+mpjpe_pa: 8.8346
+accel_dist: 2.2671,
+vel_dist: 3.0099
+
+Key: 250
+mpjpe_g: 65.1363
+mpjpe_l: 17.7982
+mpjpe_pa: 13.3804
+accel_dist: 4.5314
+vel_dist: 5.3092
+
+Key: 300
+mpjpe_g: 68.2263
+mpjpe_l: 20.6437
+mpjpe_pa: 16.4044
+accel_dist: 5.327
+vel_dist: 6.0806
+
+Key: 400
+mpjpe_g: 228.9596
+mpjpe_l: 41.75
+mpjpe_pa: 29.1093
+accel_dist: 10.9266
+vel_dist: 11.905
+FORWARD
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 3.5598
+mpjpe_l: 2.0778
+mpjpe_pa: 1.6234
+accel_dist: 0.5346
+vel_dist: 0.6247
+
+Key: 100
+mpjpe_g: 7.9825
+mpjpe_l: 4.3501
+mpjpe_pa: 3.4257
+accel_dist: 0.8825
+vel_dist: 1.1806
+
+Key: 150
+mpjpe_g: 15.1854
+mpjpe_l: 7.6387
+mpjpe_pa: 6.1175
+accel_dist: 1.3946
+vel_dist: 1.9905
+
+Key: 200
+mpjpe_g: 23.9416
+mpjpe_l: 10.9918
+mpjpe_pa: 8.9913
+accel_dist: 2.0649
+vel_dist: 2.8756
+
+Key: 250
+mpjpe_g: 40.0954
+mpjpe_l: 14.3678
+mpjpe_pa: 11.8677
+accel_dist: 3.6036
+vel_dist: 4.2219
+
+Key: 300
+mpjpe_g: 68.2263
+mpjpe_l: 20.6437
+mpjpe_pa: 16.4044
+accel_dist: 5.327
+vel_dist: 6.0806
+
+Key: 400
+mpjpe_g: 228.9596
+mpjpe_l: 41.75
+mpjpe_pa: 29.1093
+accel_dist: 10.9266
+vel_dist: 11.905
+
+
+
+Key: 350
+mpjpe_g: 155.7173
+mpjpe_l: 27.4721
+mpjpe_pa: 19.5687
+accel_dist: 11.4227
+vel_dist: 10.3145
+
+Key: 450
+mpjpe_g: 395.677
+mpjpe_l: 41.7624
+mpjpe_pa: 27.6424
+accel_dist: 23.9687
+vel_dist: 19.4085
+
+Key: 500
+mpjpe_g: 524.1759
+mpjpe_l: 52.1043
+mpjpe_pa: 32.3361
+accel_dist: 28.046
+vel_dist: 23.2076
+
+right
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 3.7101
+mpjpe_l: 2.2193
+mpjpe_pa: 1.7169
+accel_dist: 0.5889
+vel_dist: 0.6867
+
+Key: 100
+mpjpe_g: 7.8783
+mpjpe_l: 4.3728
+mpjpe_pa: 3.4297
+accel_dist: 1.0253
+vel_dist: 1.2957
+
+Key: 150
+mpjpe_g: 13.4782
+mpjpe_l: 6.7946
+mpjpe_pa: 5.3938
+accel_dist: 1.4987
+vel_dist: 1.9613
+
+Key: 200
+mpjpe_g: 22.8406
+mpjpe_l: 9.6398
+mpjpe_pa: 7.7821
+accel_dist: 2.3515
+vel_dist: 2.9055
+
+Key: 250
+mpjpe_g: 35.5778
+mpjpe_l: 12.9841
+mpjpe_pa: 10.5304
+accel_dist: 3.414
+vel_dist: 4.0346
+
+Key: 300
+mpjpe_g: 68.2263
+mpjpe_l: 20.6437
+mpjpe_pa: 16.4044
+accel_dist: 5.327
+vel_dist: 6.0806
+
+Key: 350
+mpjpe_g: 155.7173
+mpjpe_l: 27.4721
+mpjpe_pa: 19.5687
+accel_dist: 11.4227
+vel_dist: 10.3145
+
+Key: 400
+mpjpe_g: 290.3259
+mpjpe_l: 37.2001
+mpjpe_pa: 25.013
+accel_dist: 18.5485
+vel_dist: 15.5995
+
+Key: 450
+mpjpe_g: 395.677
+mpjpe_l: 41.7624
+mpjpe_pa: 27.6424
+accel_dist: 23.9687
+vel_dist: 19.4085
+
+Key: 500
+mpjpe_g: 524.1759
+mpjpe_l: 52.1043
+mpjpe_pa: 32.3361
+accel_dist: 28.046
+vel_dist: 23.2076
+
+up
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.0574
+mpjpe_l: 0.7373
+mpjpe_pa: 0.6005
+accel_dist: 0.2678
+vel_dist: 0.2697
+
+Key: 100
+mpjpe_g: 1.8626
+mpjpe_l: 1.2336
+mpjpe_pa: 0.9876
+accel_dist: 0.3934
+vel_dist: 0.4215
+
+Key: 150
+mpjpe_g: 2.6625
+mpjpe_l: 1.6978
+mpjpe_pa: 1.3545
+accel_dist: 0.5081
+vel_dist: 0.5661
+
+Key: 200
+mpjpe_g: 3.5201
+mpjpe_l: 2.1807
+mpjpe_pa: 1.7321
+accel_dist: 0.6091
+vel_dist: 0.7063
+
+Key: 250
+mpjpe_g: 4.5483
+mpjpe_l: 2.7495
+mpjpe_pa: 2.1876
+accel_dist: 0.7163
+vel_dist: 0.8683
+
+Key: 300
+mpjpe_g: 5.7581
+mpjpe_l: 3.37
+mpjpe_pa: 2.6885
+accel_dist: 0.8167
+vel_dist: 1.0373
+
+Key: 350
+mpjpe_g: 7.3251
+mpjpe_l: 4.1498
+mpjpe_pa: 3.346
+accel_dist: 0.9349
+vel_dist: 1.2315
+
+Key: 400
+mpjpe_g: 9.2647
+mpjpe_l: 5.0169
+mpjpe_pa: 4.072
+accel_dist: 1.0825
+vel_dist: 1.4711
+
+Key: 450
+mpjpe_g: 11.8513
+mpjpe_l: 6.1746
+mpjpe_pa: 5.0415
+accel_dist: 1.2647
+vel_dist: 1.7586
+
+Key: 500
+mpjpe_g: 15.0618
+mpjpe_l: 7.4319
+mpjpe_pa: 6.1332
+accel_dist: 1.4815
+vel_dist: 2.0738
+back
+
+
+head
+********************************************************
+
+
+test****************Key: 350
+mpjpe_g: 71288.4325
+mpjpe_l: 10092.26
+mpjpe_pa: 6473.1489
+accel_dist: 4313.314
+vel_dist: 3915.2967
+
+Key: 400
+mpjpe_g: 104026.5906
+mpjpe_l: 13190.9758
+mpjpe_pa: 8013.82
+accel_dist: 6088.7576
+vel_dist: 5355.5
+
+Key: 450
+mpjpe_g: 131927.1757
+mpjpe_l: 14546.3637
+mpjpe_pa: 8630.6539
+accel_dist: 7197.6782
+vel_dist: 6157.7259
+
+Key: 500
+mpjpe_g: 160564.817
+mpjpe_l: 16812.0173
+mpjpe_pa: 9673.7068
+accel_dist: 7985.4026
+vel_dist: 6969.2927
+
+leftfeet*****************************
+backwardKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 0.0039
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 254.8252
+mpjpe_l: 177.6915
+mpjpe_pa: 144.7159
+accel_dist: 64.5459
+vel_dist: 64.9989
+
+Key: 100
+mpjpe_g: 448.8955
+mpjpe_l: 297.3091
+mpjpe_pa: 238.019
+accel_dist: 94.8032
+vel_dist: 101.5779
+
+Key: 150
+mpjpe_g: 641.6618
+mpjpe_l: 409.1698
+mpjpe_pa: 326.4266
+accel_dist: 122.4582
+vel_dist: 136.419
+
+Key: 200
+mpjpe_g: 848.3459
+mpjpe_l: 525.5432
+mpjpe_pa: 417.4297
+accel_dist: 146.7877
+vel_dist: 170.2239
+
+Key: 250
+mpjpe_g: 1096.1488
+mpjpe_l: 662.6408
+mpjpe_pa: 527.2001
+accel_dist: 172.6262
+vel_dist: 209.2632
+
+Key: 300
+mpjpe_g: 1387.7092
+mpjpe_l: 812.1783
+mpjpe_pa: 647.9262
+accel_dist: 196.8177
+vel_dist: 249.9802
+
+Key: 350
+mpjpe_g: 71288.4325
+mpjpe_l: 10092.26
+mpjpe_pa: 6473.1489
+accel_dist: 4313.314
+vel_dist: 3915.2967
+
+Key: 400
+mpjpe_g: 104026.5906
+mpjpe_l: 13190.9758
+mpjpe_pa: 8013.82
+accel_dist: 6088.7576
+vel_dist: 5355.5
+
+Key: 450
+mpjpe_g: 131927.1757
+mpjpe_l: 14546.3637
+mpjpe_pa: 8630.6539
+accel_dist: 7197.6782
+vel_dist: 6157.7259
+
+Key: 500
+mpjpe_g: 160564.817
+mpjpe_l: 16812.0173
+mpjpe_pa: 9673.7068
+accel_dist: 7985.4026
+vel_dist: 6969.2927
+
+backwardKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.0574
+mpjpe_l: 0.7373
+mpjpe_pa: 0.6005
+accel_dist: 0.2678
+vel_dist: 0.2697
+
+Key: 100
+mpjpe_g: 1.8626
+mpjpe_l: 1.2336
+mpjpe_pa: 0.9876
+accel_dist: 0.3934
+vel_dist: 0.4215
+
+Key: 150
+mpjpe_g: 2.6625
+mpjpe_l: 1.6978
+mpjpe_pa: 1.3545
+accel_dist: 0.5081
+vel_dist: 0.5661
+
+Key: 200
+mpjpe_g: 3.5201
+mpjpe_l: 2.1807
+mpjpe_pa: 1.7321
+accel_dist: 0.6091
+vel_dist: 0.7063
+
+Key: 250
+mpjpe_g: 4.5483
+mpjpe_l: 2.7495
+mpjpe_pa: 2.1876
+accel_dist: 0.7163
+vel_dist: 0.8683
+
+Key: 300
+mpjpe_g: 5.7581
+mpjpe_l: 3.37
+mpjpe_pa: 2.6885
+accel_dist: 0.8167
+vel_dist: 1.0373
+
+Key: 350
+mpjpe_g: 295.8026
+mpjpe_l: 41.8766
+mpjpe_pa: 26.8595
+accel_dist: 17.8976
+vel_dist: 16.246
+
+Key: 400
+mpjpe_g: 431.6456
+mpjpe_l: 54.7343
+mpjpe_pa: 33.2524
+accel_dist: 25.2646
+vel_dist: 22.222
+
+Key: 450
+mpjpe_g: 547.4157
+mpjpe_l: 60.3584
+mpjpe_pa: 35.8118
+accel_dist: 29.8659
+vel_dist: 25.5507
+
+Key: 500
+mpjpe_g: 666.244
+mpjpe_l: 69.7594
+mpjpe_pa: 40.1399
+accel_dist: 33.1344
+vel_dist: 28.9182
+
+
+heads down*************************************
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 0.0039
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 370.5882
+mpjpe_l: 268.8453
+mpjpe_pa: 203.0552
+accel_dist: 83.6588
+vel_dist: 87.6502
+
+Key: 100
+mpjpe_g: 671.9552
+mpjpe_l: 473.7808
+mpjpe_pa: 353.9116
+accel_dist: 127.0269
+vel_dist: 141.8551
+
+Key: 150
+mpjpe_g: 980.9923
+mpjpe_l: 676.3739
+mpjpe_pa: 503.0736
+accel_dist: 164.5858
+vel_dist: 193.5066
+
+Key: 200
+mpjpe_g: 1318.4131
+mpjpe_l: 893.3088
+mpjpe_pa: 664.2594
+accel_dist: 199.652
+vel_dist: 245.5477
+
+Key: 250
+mpjpe_g: 1712.0972
+mpjpe_l: 1139.6561
+mpjpe_pa: 848.7968
+accel_dist: 241.4453
+vel_dist: 304.5204
+
+Key: 300
+mpjpe_g: 2867.4555
+mpjpe_l: 1577.9019
+mpjpe_pa: 1225.8957
+accel_dist: 301.0017
+vel_dist: 419.7813
+
+Key: 350
+mpjpe_g: 4924.433
+mpjpe_l: 2260.4667
+mpjpe_pa: 1769.6219
+accel_dist: 416.0566
+vel_dist: 586.8153
+
+Key: 400
+mpjpe_g: 5429.1443
+mpjpe_l: 2584.0045
+mpjpe_pa: 2059.4435
+accel_dist: 490.5251
+vel_dist: 675.2301
+
+Key: 450
+mpjpe_g: 9606.3525
+mpjpe_l: 3232.1406
+mpjpe_pa: 2564.1551
+accel_dist: 830.7819
+vel_dist: 956.818
+
+Key: 500
+mpjpe_g: 20924.4646
+mpjpe_l: 4941.9135
+mpjpe_pa: 3735.8683
+accel_dist: 1456.1236
+vel_dist: 1557.8213
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.5377
+mpjpe_l: 1.1155
+mpjpe_pa: 0.8426
+accel_dist: 0.3471
+vel_dist: 0.3637
+
+Key: 100
+mpjpe_g: 2.7882
+mpjpe_l: 1.9659
+mpjpe_pa: 1.4685
+accel_dist: 0.5271
+vel_dist: 0.5886
+
+Key: 150
+mpjpe_g: 4.0705
+mpjpe_l: 2.8065
+mpjpe_pa: 2.0874
+accel_dist: 0.6829
+vel_dist: 0.8029
+
+Key: 200
+mpjpe_g: 5.4706
+mpjpe_l: 3.7067
+mpjpe_pa: 2.7563
+accel_dist: 0.8284
+vel_dist: 1.0189
+
+Key: 250
+mpjpe_g: 7.1041
+mpjpe_l: 4.7289
+mpjpe_pa: 3.522
+accel_dist: 1.0018
+vel_dist: 1.2636
+
+Key: 300
+mpjpe_g: 11.8982
+mpjpe_l: 6.5473
+mpjpe_pa: 5.0867
+accel_dist: 1.249
+vel_dist: 1.7418
+
+Key: 350
+mpjpe_g: 20.4333
+mpjpe_l: 9.3795
+mpjpe_pa: 7.3428
+accel_dist: 1.7264
+vel_dist: 2.4349
+
+Key: 400
+mpjpe_g: 22.5276
+mpjpe_l: 10.722
+mpjpe_pa: 8.5454
+accel_dist: 2.0354
+vel_dist: 2.8018
+
+Key: 450
+mpjpe_g: 39.8604
+mpjpe_l: 13.4114
+mpjpe_pa: 10.6396
+accel_dist: 3.4472
+vel_dist: 3.9702
+
+Key: 500
+mpjpe_g: 86.8235
+mpjpe_l: 20.5059
+mpjpe_pa: 15.5015
+accel_dist: 6.042
+vel_dist: 6.464
+
+leftfeet**********************
+vackwardKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.8993
+mpjpe_l: 1.6501
+mpjpe_pa: 1.3148
+accel_dist: 0.3681
+vel_dist: 0.4046
+
+Key: 100
+mpjpe_g: 3.6014
+mpjpe_l: 3.1349
+mpjpe_pa: 2.4803
+accel_dist: 0.5803
+vel_dist: 0.6919
+
+Key: 150
+mpjpe_g: 5.4172
+mpjpe_l: 4.7086
+mpjpe_pa: 3.6784
+accel_dist: 0.7894
+vel_dist: 0.9932
+
+Key: 200
+mpjpe_g: 16.246
+mpjpe_l: 6.6914
+mpjpe_pa: 5.1511
+accel_dist: 1.5045
+vel_dist: 1.6139
+
+Key: 250
+mpjpe_g: 46.2474
+mpjpe_l: 12.4172
+mpjpe_pa: 8.4127
+accel_dist: 2.9939
+vel_dist: 3.4247
+
+Key: 300
+mpjpe_g: 118.8836
+mpjpe_l: 20.3163
+mpjpe_pa: 12.0225
+accel_dist: 5.4802
+vel_dist: 6.2881
+
+Key: 350
+mpjpe_g: 286.3764
+mpjpe_l: 39.1889
+mpjpe_pa: 22.0933
+accel_dist: 11.9589
+vel_dist: 12.9729
+
+Key: 400
+mpjpe_g: 471.5084
+mpjpe_l: 55.423
+mpjpe_pa: 30.7176
+accel_dist: 18.6009
+vel_dist: 19.3418
+
+Key: 450
+mpjpe_g: 597.0344
+mpjpe_l: 66.693
+mpjpe_pa: 35.9503
+accel_dist: 23.0102
+vel_dist: 23.5929
+
+Key: 500
+mpjpe_g: 666.2115
+mpjpe_l: 72.8823
+mpjpe_pa: 39.5723
+accel_dist: 25.6477
+vel_dist: 25.8726
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.8993
+mpjpe_l: 1.6501
+mpjpe_pa: 1.3148
+accel_dist: 0.3681
+vel_dist: 0.4046
+
+Key: 100
+mpjpe_g: 3.6014
+mpjpe_l: 3.1349
+mpjpe_pa: 2.4803
+accel_dist: 0.5803
+vel_dist: 0.6919
+
+Key: 150
+mpjpe_g: 5.4172
+mpjpe_l: 4.7086
+mpjpe_pa: 3.6784
+accel_dist: 0.7894
+vel_dist: 0.9932
+
+Key: 200
+mpjpe_g: 16.246
+mpjpe_l: 6.6914
+mpjpe_pa: 5.1511
+accel_dist: 1.5045
+vel_dist: 1.6139
+
+Key: 250
+mpjpe_g: 46.2474
+mpjpe_l: 12.4172
+mpjpe_pa: 8.4127
+accel_dist: 2.9939
+vel_dist: 3.4247
+
+Key: 300
+mpjpe_g: 118.8836
+mpjpe_l: 20.3163
+mpjpe_pa: 12.0225
+accel_dist: 5.4802
+vel_dist: 6.2881
+
+Key: 350
+mpjpe_g: 286.3764
+mpjpe_l: 39.1889
+mpjpe_pa: 22.0933
+accel_dist: 11.9589
+vel_dist: 12.9729
+
+Key: 400
+mpjpe_g: 471.5084
+mpjpe_l: 55.423
+mpjpe_pa: 30.7176
+accel_dist: 18.6009
+vel_dist: 19.3418
+
+Key: 450
+mpjpe_g: 597.0344
+mpjpe_l: 66.693
+mpjpe_pa: 35.9503
+accel_dist: 23.0102
+vel_dist: 23.5929
+
+Key: 500
+mpjpe_g: 666.2115
+mpjpe_l: 72.8823
+mpjpe_pa: 39.5723
+accel_dist: 25.6477
+vel_dist: 25.8726
+
+righthands*************************************
+right
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 3.9612
+mpjpe_l: 2.6535
+mpjpe_pa: 2.3313
+accel_dist: 0.6121
+vel_dist: 0.7223
+
+Key: 100
+mpjpe_g: 8.1595
+mpjpe_l: 5.0702
+mpjpe_pa: 4.3816
+accel_dist: 1.0152
+vel_dist: 1.3027
+
+Key: 150
+mpjpe_g: 13.9062
+mpjpe_l: 7.758
+mpjpe_pa: 6.513
+accel_dist: 1.461
+vel_dist: 1.9496
+
+Key: 200
+mpjpe_g: 21.4687
+mpjpe_l: 10.4303
+mpjpe_pa: 8.6394
+accel_dist: 2.225
+vel_dist: 2.7866
+
+Key: 250
+mpjpe_g: 47.1311
+mpjpe_l: 14.3999
+mpjpe_pa: 11.5461
+accel_dist: 3.9061
+vel_dist: 4.2858
+
+Key: 300
+mpjpe_g: 67.5237
+mpjpe_l: 17.8602
+mpjpe_pa: 14.1041
+accel_dist: 5.4606
+vel_dist: 5.6754
+
+Key: 350
+mpjpe_g: 115.231
+mpjpe_l: 23.7425
+mpjpe_pa: 17.6895
+accel_dist: 8.6757
+vel_dist: 8.311
+
+Key: 450
+mpjpe_g: 368.3439
+mpjpe_l: 51.0542
+mpjpe_pa: 32.1409
+accel_dist: 22.3911
+vel_dist: 19.7911
+
+Key: 500
+mpjpe_g: 577.6426
+mpjpe_l: 66.2325
+mpjpe_pa: 39.9314
+accel_dist: 28.8343
+vel_dist: 25.7169
+leftfeet************************************
+right
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.644
+mpjpe_l: 1.4415
+mpjpe_pa: 1.1709
+accel_dist: 0.3265
+vel_dist: 0.3617
+
+Key: 100
+mpjpe_g: 3.0593
+mpjpe_l: 2.6873
+mpjpe_pa: 2.1623
+accel_dist: 0.5208
+vel_dist: 0.6177
+
+Key: 150
+mpjpe_g: 4.4952
+mpjpe_l: 3.956
+mpjpe_pa: 3.1879
+accel_dist: 0.6994
+vel_dist: 0.8679
+
+Key: 200
+mpjpe_g: 5.9342
+mpjpe_l: 5.2129
+mpjpe_pa: 4.1627
+accel_dist: 0.8863
+vel_dist: 1.1244
+
+Key: 250
+mpjpe_g: 15.3094
+mpjpe_l: 6.7752
+mpjpe_pa: 5.3459
+accel_dist: 1.5031
+vel_dist: 1.6344
+
+Key: 300
+mpjpe_g: 23.5077
+mpjpe_l: 8.2515
+mpjpe_pa: 6.4717
+accel_dist: 1.9441
+vel_dist: 2.0816
+
+Key: 350
+mpjpe_g: 25.5172
+mpjpe_l: 9.7622
+mpjpe_pa: 7.5941
+accel_dist: 2.1788
+vel_dist: 2.3801
+
+Key: 400
+mpjpe_g: 30.7562
+mpjpe_l: 12.0924
+mpjpe_pa: 9.1082
+accel_dist: 2.6077
+vel_dist: 2.8794
+
+Key: 450
+mpjpe_g: 39.3277
+mpjpe_l: 15.2651
+mpjpe_pa: 11.2201
+accel_dist: 3.2197
+vel_dist: 3.6408
+
+Key: 500
+mpjpe_g: 62.3915
+mpjpe_l: 18.9077
+mpjpe_pa: 13.5013
+accel_dist: 4.7948
+vel_dist: 5.0391
+
+leftfeet*******************************FORWARD
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.9754
+mpjpe_l: 1.6974
+mpjpe_pa: 1.3743
+accel_dist: 0.3726
+vel_dist: 0.4136
+
+Key: 100
+mpjpe_g: 3.4904
+mpjpe_l: 2.995
+mpjpe_pa: 2.4221
+accel_dist: 0.5732
+vel_dist: 0.6765
+
+Key: 150
+mpjpe_g: 5.1345
+mpjpe_l: 4.3581
+mpjpe_pa: 3.5384
+accel_dist: 0.7723
+vel_dist: 0.9534
+
+Key: 200
+mpjpe_g: 14.9029
+mpjpe_l: 5.7559
+mpjpe_pa: 4.6741
+accel_dist: 1.3981
+vel_dist: 1.4644
+
+Key: 250
+mpjpe_g: 11.8038
+mpjpe_l: 7.6658
+mpjpe_pa: 6.0274
+accel_dist: 1.3602
+vel_dist: 1.7227
+
+Key: 300
+mpjpe_g: 9.6747
+mpjpe_l: 8.0399
+mpjpe_pa: 6.4189
+accel_dist: 1.4635
+vel_dist: 1.8126
+
+Key: 350
+mpjpe_g: 21.9281
+mpjpe_l: 10.2028
+mpjpe_pa: 7.8517
+accel_dist: 2.5502
+vel_dist: 2.6995
+
+Key: 400
+mpjpe_g: 30.6115
+mpjpe_l: 11.9117
+mpjpe_pa: 9.0492
+accel_dist: 2.9022
+vel_dist: 3.1596
+
+Key: 450
+mpjpe_g: 48.4771
+mpjpe_l: 14.4753
+mpjpe_pa: 10.4778
+accel_dist: 4.2713
+vel_dist: 4.3282
+
+Key: 500
+mpjpe_g: 93.6265
+mpjpe_l: 18.5167
+mpjpe_pa: 13.1169
+accel_dist: 5.9603
+vel_dist: 5.8614
+
+head************************
+forwardKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 6.4436
+mpjpe_l: 3.9934
+mpjpe_pa: 2.9073
+accel_dist: 0.783
+vel_dist: 1.0152
+
+Key: 100
+mpjpe_g: 18.2608
+mpjpe_l: 9.7123
+mpjpe_pa: 7.4147
+accel_dist: 1.6567
+vel_dist: 2.3398
+
+Key: 150
+mpjpe_g: 47.33
+mpjpe_l: 17.7818
+mpjpe_pa: 13.6896
+accel_dist: 4.2383
+vel_dist: 4.8909
+
+Key: 200
+mpjpe_g: 191.8137
+mpjpe_l: 36.4437
+mpjpe_pa: 25.5858
+accel_dist: 10.0242
+vel_dist: 10.5785
+
+Key: 250
+mpjpe_g: 461.088
+mpjpe_l: 60.0138
+mpjpe_pa: 38.0025
+accel_dist: 17.4761
+vel_dist: 17.8134
+
+Key: 300
+mpjpe_g: 670.197
+mpjpe_l: 75.6594
+mpjpe_pa: 45.5001
+accel_dist: 22.7133
+vel_dist: 23.652
+
+Key: 350
+mpjpe_g: 763.2363
+mpjpe_l: 78.7697
+mpjpe_pa: 47.3572
+accel_dist: 25.5987
+vel_dist: 26.0927
+
+Key: 400
+mpjpe_g: 556.8022
+mpjpe_l: 56.6913
+mpjpe_pa: 36.9039
+accel_dist: 24.6997
+vel_dist: 22.6907
+
+Key: 450
+mpjpe_g: 605.7413
+mpjpe_l: 58.1752
+mpjpe_pa: 37.0364
+accel_dist: 24.4966
+vel_dist: 23.3987
+
+Key: 500
+mpjpe_g: 321.4454
+mpjpe_l: 39.8784
+mpjpe_pa: 28.5096
+accel_dist: 27.8469
+vel_dist: 21.7784
+***********************
+leftfeet  left
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.7271
+mpjpe_l: 1.4927
+mpjpe_pa: 1.2125
+accel_dist: 0.3451
+vel_dist: 0.384
+
+Key: 100
+mpjpe_g: 3.1505
+mpjpe_l: 2.7472
+mpjpe_pa: 2.2202
+accel_dist: 0.534
+vel_dist: 0.6388
+
+Key: 150
+mpjpe_g: 4.5798
+mpjpe_l: 4.0179
+mpjpe_pa: 3.252
+accel_dist: 0.7064
+vel_dist: 0.8922
+
+Key: 200
+mpjpe_g: 15.178
+mpjpe_l: 5.6187
+mpjpe_pa: 4.5109
+accel_dist: 1.3215
+vel_dist: 1.4237
+
+Key: 250
+mpjpe_g: 17.364
+mpjpe_l: 7.2562
+mpjpe_pa: 5.7955
+accel_dist: 1.5592
+vel_dist: 1.7674
+
+Key: 300
+mpjpe_g: 42.9342
+mpjpe_l: 11.6728
+mpjpe_pa: 8.456
+accel_dist: 2.6375
+vel_dist: 3.1102
+
+Key: 350
+mpjpe_g: 46.439
+mpjpe_l: 14.7328
+mpjpe_pa: 10.5683
+accel_dist: 2.9205
+vel_dist: 3.6145
+
+Key: 400
+mpjpe_g: 133.8083
+mpjpe_l: 26.6626
+mpjpe_pa: 16.526
+accel_dist: 7.1005
+vel_dist: 7.858
+
+Key: 450
+mpjpe_g: 216.4844
+mpjpe_l: 38.8069
+mpjpe_pa: 21.9872
+accel_dist: 10.7014
+vel_dist: 11.7148
+
+Key: 500
+mpjpe_g: 369.7166
+mpjpe_l: 53.3128
+mpjpe_pa: 28.9382
+accel_dist: 15.2339
+vel_dist: 16.6543
+
+lefthands**************************
+leftKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 3.8213
+mpjpe_l: 2.5395
+mpjpe_pa: 2.2513
+accel_dist: 0.6087
+vel_dist: 0.7083
+
+Key: 100
+mpjpe_g: 8.1891
+mpjpe_l: 4.8042
+mpjpe_pa: 4.1748
+accel_dist: 0.9808
+vel_dist: 1.2628
+
+Key: 150
+mpjpe_g: 25.8169
+mpjpe_l: 8.2539
+mpjpe_pa: 6.7558
+accel_dist: 1.9114
+vel_dist: 2.3259
+
+Key: 200
+mpjpe_g: 43.5749
+mpjpe_l: 12.673
+mpjpe_pa: 9.9824
+accel_dist: 2.746
+vel_dist: 3.5303
+
+Key: 250
+mpjpe_g: 110.5049
+mpjpe_l: 21.0516
+mpjpe_pa: 14.4844
+accel_dist: 5.529
+vel_dist: 6.4506
+
+Key: 300
+mpjpe_g: 244.6192
+mpjpe_l: 37.6149
+mpjpe_pa: 23.2509
+accel_dist: 9.4637
+vel_dist: 11.2973
+
+Key: 350
+mpjpe_g: 376.8014
+mpjpe_l: 51.4384
+mpjpe_pa: 29.7563
+accel_dist: 13.6481
+vel_dist: 15.5927
+
+Key: 400
+mpjpe_g: 503.1179
+mpjpe_l: 62.144
+mpjpe_pa: 34.1078
+accel_dist: 17.6196
+vel_dist: 19.4572
+
+Key: 450
+mpjpe_g: 619.2118
+mpjpe_l: 69.5657
+mpjpe_pa: 38.4851
+accel_dist: 21.4752
+vel_dist: 22.9084
+
+Key: 500
+mpjpe_g: 663.6534
+mpjpe_l: 68.7027
+mpjpe_pa: 37.6426
+accel_dist: 23.5791
+vel_dist: 23.9167
+
+leftfeet***************************
+leftKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.7271
+mpjpe_l: 1.4927
+mpjpe_pa: 1.2125
+accel_dist: 0.3451
+vel_dist: 0.384
+
+Key: 100
+mpjpe_g: 3.1505
+mpjpe_l: 2.7472
+mpjpe_pa: 2.2202
+accel_dist: 0.534
+vel_dist: 0.6388
+
+Key: 150
+mpjpe_g: 4.5798
+mpjpe_l: 4.0179
+mpjpe_pa: 3.252
+accel_dist: 0.7064
+vel_dist: 0.8922
+
+Key: 200
+mpjpe_g: 15.178
+mpjpe_l: 5.6187
+mpjpe_pa: 4.5109
+accel_dist: 1.3215
+vel_dist: 1.4237
+
+Key: 250
+mpjpe_g: 17.364
+mpjpe_l: 7.2562
+mpjpe_pa: 5.7955
+accel_dist: 1.5592
+vel_dist: 1.7674
+
+Key: 300
+mpjpe_g: 42.9342
+mpjpe_l: 11.6728
+mpjpe_pa: 8.456
+accel_dist: 2.6375
+vel_dist: 3.1102
+
+Key: 350
+mpjpe_g: 46.439
+mpjpe_l: 14.7328
+mpjpe_pa: 10.5683
+accel_dist: 2.9205
+vel_dist: 3.6145
+
+Key: 400
+mpjpe_g: 133.8083
+mpjpe_l: 26.6626
+mpjpe_pa: 16.526
+accel_dist: 7.1005
+vel_dist: 7.858
+
+Key: 450
+mpjpe_g: 216.4844
+mpjpe_l: 38.8069
+mpjpe_pa: 21.9872
+accel_dist: 10.7014
+vel_dist: 11.7148
+
+Key: 500
+mpjpe_g: 369.7166
+mpjpe_l: 53.3128
+mpjpe_pa: 28.9382
+accel_dist: 15.2339
+vel_dist: 16.6543
+
+heads back********************************Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 6.6577
+mpjpe_l: 4.1108
+mpjpe_pa: 3.0532
+accel_dist: 0.8792
+vel_dist: 1.1021
+
+Key: 100
+mpjpe_g: 18.6202
+mpjpe_l: 9.6185
+mpjpe_pa: 7.4134
+accel_dist: 1.79
+vel_dist: 2.4028
+
+Key: 150
+mpjpe_g: 107.4334
+mpjpe_l: 23.8988
+mpjpe_pa: 16.3949
+accel_dist: 5.7086
+vel_dist: 6.8771
+
+Key: 200
+mpjpe_g: 363.8124
+mpjpe_l: 51.3815
+mpjpe_pa: 31.3336
+accel_dist: 20.6804
+vel_dist: 18.9111
+
+Key: 250
+mpjpe_g: 565.261
+mpjpe_l: 65.8065
+mpjpe_pa: 37.8458
+accel_dist: 30.4798
+vel_dist: 26.2067
+
+Key: 300
+mpjpe_g: 685.9968
+mpjpe_l: 71.8567
+mpjpe_pa: 41.5471
+accel_dist: 32.572
+vel_dist: 28.6851
+
+Key: 350
+mpjpe_g: 688.4868
+mpjpe_l: 67.6081
+mpjpe_pa: 38.4735
+accel_dist: 30.8484
+vel_dist: 27.5394
+
+Key: 400
+mpjpe_g: 678.9415
+mpjpe_l: 65.1416
+mpjpe_pa: 38.0222
+accel_dist: 30.7331
+vel_dist: 27.2594
+
+Key: 450
+mpjpe_g: 387.3016
+mpjpe_l: 46.8444
+mpjpe_pa: 30.9285
+accel_dist: 35.846
+vel_dist: 26.2165
+
+Key: 500
+mpjpe_g: 339.3461
+mpjpe_l: 43.8271
+mpjpe_pa: 29.7467
+accel_dist: 36.4787
+vel_dist: 26.2477
+
+heads right
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 6.6248
+mpjpe_l: 4.147
+mpjpe_pa: 3.0048
+accel_dist: 0.9069
+vel_dist: 1.1337
+
+Key: 100
+mpjpe_g: 26.5636
+mpjpe_l: 9.2175
+mpjpe_pa: 6.9327
+accel_dist: 2.4617
+vel_dist: 2.743
+
+Key: 150
+mpjpe_g: 40.5307
+mpjpe_l: 15.8256
+mpjpe_pa: 11.9244
+accel_dist: 4.2852
+vel_dist: 4.6738
+
+Key: 200
+mpjpe_g: 162.6086
+mpjpe_l: 31.1199
+mpjpe_pa: 21.0076
+accel_dist: 12.6333
+vel_dist: 11.1064
+
+Key: 250
+mpjpe_g: 456.5511
+mpjpe_l: 50.4717
+mpjpe_pa: 31.2706
+accel_dist: 25.5017
+vel_dist: 20.9863
+
+Key: 300
+mpjpe_g: 697.0905
+mpjpe_l: 70.164
+mpjpe_pa: 39.152
+accel_dist: 32.1661
+vel_dist: 28.4851
+
+Key: 350
+mpjpe_g: 795.9672
+mpjpe_l: 78.3183
+mpjpe_pa: 43.6415
+accel_dist: 33.4645
+vel_dist: 31.0479
+
+Key: 400
+mpjpe_g: 585.8044
+mpjpe_l: 57.2297
+mpjpe_pa: 34.7146
+accel_dist: 31.9633
+vel_dist: 26.3013
+
+Key: 450
+mpjpe_g: 667.6512
+mpjpe_l: 62.883
+mpjpe_pa: 36.7913
+accel_dist: 30.4044
+vel_dist: 26.8571
+
+Key: 500
+mpjpe_g: 402.4331
+mpjpe_l: 46.0049
+mpjpe_pa: 29.9694
+accel_dist: 34.7898
+vel_dist: 25.8638
+
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 6.7516
+mpjpe_l: 3.9896
+mpjpe_pa: 2.8255
+accel_dist: 0.8254
+vel_dist: 1.0403
+
+Key: 100
+mpjpe_g: 28.8406
+mpjpe_l: 10.7928
+mpjpe_pa: 8.0876
+accel_dist: 1.9559
+vel_dist: 2.6255
+
+Key: 150
+mpjpe_g: 167.4579
+mpjpe_l: 33.03
+mpjpe_pa: 20.5799
+accel_dist: 7.8173
+vel_dist: 9.0563
+
+Key: 200
+mpjpe_g: 509.8885
+mpjpe_l: 64.0449
+mpjpe_pa: 35.3776
+accel_dist: 18.6113
+vel_dist: 19.666
+
+Key: 250
+mpjpe_g: 681.397
+mpjpe_l: 74.401
+mpjpe_pa: 41.7139
+accel_dist: 22.9275
+vel_dist: 23.821
+
+Key: 300
+mpjpe_g: 767.3075
+mpjpe_l: 76.7358
+mpjpe_pa: 44.4705
+accel_dist: 25.9581
+vel_dist: 26.4017
+
+Key: 350
+mpjpe_g: 812.8454
+mpjpe_l: 78.7714
+mpjpe_pa: 45.8455
+accel_dist: 27.4305
+vel_dist: 27.7562
+
+Key: 400
+mpjpe_g: 438.2352
+mpjpe_l: 46.9724
+mpjpe_pa: 30.8058
+accel_dist: 26.713
+vel_dist: 22.3971
+
+Key: 450
+mpjpe_g: 440.4758
+mpjpe_l: 46.1966
+mpjpe_pa: 30.6072
+accel_dist: 26.445
+vel_dist: 22.6395
+
+Key: 500
+mpjpe_g: 444.3498
+mpjpe_l: 46.1753
+mpjpe_pa: 30.8652
+accel_dist: 26.0313
+vel_dist: 22.6151
+
+lefthands***********downKey: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 4.253
+mpjpe_l: 2.8812
+mpjpe_pa: 2.4908
+accel_dist: 0.621
+vel_dist: 0.7285
+
+Key: 100
+mpjpe_g: 9.0837
+mpjpe_l: 5.6379
+mpjpe_pa: 4.8434
+accel_dist: 1.006
+vel_dist: 1.2975
+
+Key: 150
+mpjpe_g: 15.472
+mpjpe_l: 8.7422
+mpjpe_pa: 7.3574
+accel_dist: 1.4435
+vel_dist: 1.9628
+
+Key: 200
+mpjpe_g: 33.4681
+mpjpe_l: 13.6303
+mpjpe_pa: 10.6987
+accel_dist: 2.2416
+vel_dist: 3.1233
+
+Key: 250
+mpjpe_g: 165.4304
+mpjpe_l: 30.7359
+mpjpe_pa: 19.3759
+accel_dist: 6.3962
+vel_dist: 8.291
+
+Key: 300
+mpjpe_g: 315.8886
+mpjpe_l: 51.4295
+mpjpe_pa: 29.5969
+accel_dist: 12.979
+vel_dist: 15.068
+
+Key: 350
+mpjpe_g: 421.3038
+mpjpe_l: 63.8082
+mpjpe_pa: 34.6221
+accel_dist: 19.5502
+vel_dist: 20.2042
+
+Key: 400
+mpjpe_g: 538.0745
+mpjpe_l: 72.95
+mpjpe_pa: 39.05
+accel_dist: 24.3987
+vel_dist: 23.7897
+
+Key: 450
+mpjpe_g: 647.3499
+mpjpe_l: 75.7509
+mpjpe_pa: 40.7463
+accel_dist: 29.0832
+vel_dist: 27.0892
+
+Key: 500
+mpjpe_g: 712.4296
+mpjpe_l: 80.191
+mpjpe_pa: 43.1471
+accel_dist: 29.9975
+vel_dist: 28.7257
+leftfeet*****************
+down
+Key: 0
+mpjpe_g: 0.
+mpjpe_l: 0.
+mpjpe_pa: 1.6099e-05
+accel_dist: 0.
+vel_dist: 0.
+
+Key: 50
+mpjpe_g: 1.8993
+mpjpe_l: 1.6501
+mpjpe_pa: 1.3148
+accel_dist: 0.3681
+vel_dist: 0.4046
+
+Key: 100
+mpjpe_g: 3.6014
+mpjpe_l: 3.1349
+mpjpe_pa: 2.4803
+accel_dist: 0.5803
+vel_dist: 0.6919
+
+Key: 150
+mpjpe_g: 5.4172
+mpjpe_l: 4.7086
+mpjpe_pa: 3.6784
+accel_dist: 0.7894
+vel_dist: 0.9932
+
+Key: 200
+mpjpe_g: 16.246
+mpjpe_l: 6.6914
+mpjpe_pa: 5.1511
+accel_dist: 1.5045
+vel_dist: 1.6139
+
+Key: 250
+mpjpe_g: 46.2474
+mpjpe_l: 12.4172
+mpjpe_pa: 8.4127
+accel_dist: 2.9939
+vel_dist: 3.4247
+
+Key: 300
+mpjpe_g: 118.8836
+mpjpe_l: 20.3163
+mpjpe_pa: 12.0225
+accel_dist: 5.4802
+vel_dist: 6.2881
+
+Key: 350
+mpjpe_g: 286.3764
+mpjpe_l: 39.1889
+mpjpe_pa: 22.0933
+accel_dist: 11.9589
+vel_dist: 12.9729
+
+Key: 400
+mpjpe_g: 471.5084
+mpjpe_l: 55.423
+mpjpe_pa: 30.7176
+accel_dist: 18.6009
+vel_dist: 19.3418
+
+Key: 450
+mpjpe_g: 597.0344
+mpjpe_l: 66.693
+mpjpe_pa: 35.9503
+accel_dist: 23.0102
+vel_dist: 23.5929
+
+Key: 500
+mpjpe_g: 369.7166
+mpjpe_l: 53.3128
+mpjpe_pa: 28.9382
+accel_dist: 15.2339
+vel_dist: 16.6543
+

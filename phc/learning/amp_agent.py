@@ -32,6 +32,32 @@ def load_my_state_dict(target, saved_dict):
         if target[name].shape == param.shape:
             target[name].copy_(param)
 
+class ExpertModel(nn.Module):
+    def __init__(self, input_size, actions_num, units):
+        super().__init__()
+
+        mlp_args = {'input_size': input_size, 'units': units, 'dense_func': torch.nn.Linear}
+        self.a2c_network = torch.nn.Module()
+        self.a2c_network.actor_mlp = self._build_mlp(**mlp_args)
+        self.a2c_network.mu        = torch.nn.Linear(units[-1], actions_num)
+        # self.sigma = nn.Parameter(torch.zeros(actions_num, requires_grad=True, dtype=torch.float32), requires_grad=True)
+
+    def _build_mlp(self, input_size, units, dense_func):
+        return self._build_res_mlp(input_size, units, dense_func,)
+
+    def _build_res_mlp(self, input_size, units, dense_func):
+        in_size = input_size
+        layers = []
+        for unit in units:
+            layers.append(dense_func(in_size, unit))
+            layers.append(torch.nn.SiLU())
+            in_size = unit
+        return nn.Sequential(*layers)
+
+    def forward(self, obs):
+        a_out = self.a2c_network.actor_mlp(obs)
+        mu    = self.a2c_network.mu(a_out)
+        return mu
 
 class AMPAgent(common_agent.CommonAgent):
 
@@ -44,7 +70,7 @@ class AMPAgent(common_agent.CommonAgent):
 
         if self._normalize_amp_input:
             self._amp_input_mean_std = RunningMeanStd(self._amp_observation_space.shape).to(self.ppo_device)
-
+        
         norm_disc_reward = config.get('norm_disc_reward', False)
         if (norm_disc_reward):
             self._disc_reward_mean_std = RunningMeanStd((1,)).to(self.ppo_device)
@@ -63,6 +89,23 @@ class AMPAgent(common_agent.CommonAgent):
             self.freeze_state_weights()  # freeze the mean stds.
             # load_my_state_dict(self.model.state_dict(), checkpoint['model'])  # loads everything (model, std, ect.). that can be load from the last model.
             # self.value_mean_std # not freezing value function though.
+        
+        self.expert_distill = config.get('expert_distill', False)
+        #### xinpeng added ####
+        if self.expert_distill:
+            checkpoint = torch_ext.load_checkpoint(self.expert_distill.model_path)
+            actions_num = checkpoint['model']['a2c_network.sigma'].shape[0]
+            input_size  = checkpoint['model']['running_mean_std']['running_mean'].shape[0]
+            self.expert_model = ExpertModel(input_size, actions_num, self.expert_distill.units)
+            load_my_state_dict(self.expert_model.state_dict(), checkpoint['model'])
+            self.expert_model.freeze()
+            self.expert_model.eval()
+
+            self.expert_model.to(self.ppo_device)
+            self.expert_input_mean_std = RunningMeanStd(checkpoint['running_mean_std']['running_mean'].shape).to(self.ppo_device)
+            self.expert_input_mean_std.load_state_dict(checkpoint['running_mean_std'])
+            self.expert_input_mean_std.freeze()
+        #### xinpeng added ####
         
         return
     
@@ -339,6 +382,8 @@ class AMPAgent(common_agent.CommonAgent):
             self.experience_buffer.update_data('next_obses', n, self.obs['obs'])
             self.experience_buffer.update_data('dones', n, self.dones)
             self.experience_buffer.update_data('amp_obs', n, infos['amp_obs'])
+            if self.expert_distill:
+                self.experience_buffer.update_data('expert_obs', n, infos['obs_expert'])
 
                 
             terminated = infos['terminate'].float()
@@ -403,6 +448,8 @@ class AMPAgent(common_agent.CommonAgent):
         dataset_dict['amp_obs'] = batch_dict['amp_obs']
         dataset_dict['amp_obs_demo'] = batch_dict['amp_obs_demo']
         dataset_dict['amp_obs_replay'] = batch_dict['amp_obs_replay']
+        if self.expert_distill:
+            dataset_dict['expert_obs'] = batch_dict['expert_obs']
 
             
         self.dataset.update_values_dict(dataset_dict, rnn_format = True, horizon_length = self.horizon_length, num_envs = self.num_actors)
@@ -566,6 +613,10 @@ class AMPAgent(common_agent.CommonAgent):
         obs_batch = input_dict['obs']
         obs_batch_processed = self._preproc_obs(obs_batch, use_temp=self.temp_running_mean)
         input_dict['obs_processed'] = obs_batch_processed
+        if self.expert_distill:
+            expert_obs    = input_dict['expert_obs']
+            expert_obs    = self.expert_input_mean_std(expert_obs)
+            expert_action = self.expert_model(expert_obs)
 
         amp_obs = input_dict['amp_obs'][0:self._amp_minibatch_size]
         amp_obs = self._preproc_amp_obs(amp_obs)
@@ -588,6 +639,8 @@ class AMPAgent(common_agent.CommonAgent):
             'prev_actions': actions_batch, 'obs': obs_batch_processed, 'amp_obs': amp_obs, 'amp_obs_replay': amp_obs_replay, 'amp_obs_demo': amp_obs_demo, \
                 "obs_orig": obs_batch
                 }
+        if self.expert_distill:
+            batch_dict['expert_action'] = expert_action
     
         rnn_masks = None
         rnn_len = self.horizon_length
@@ -647,6 +700,11 @@ class AMPAgent(common_agent.CommonAgent):
             a_info['actor_clip_frac'] = a_clip_frac
             c_info['critic_loss'] = c_loss
 
+            if self.expert_distill:
+                e_info = self._expert_loss(res_dict)
+                loss += e_info['bc_loss']
+                loss += e_info['prior_loss']
+
             if self.multi_gpu:
                 self.optimizer.zero_grad()
             else:
@@ -684,6 +742,8 @@ class AMPAgent(common_agent.CommonAgent):
         self.train_result.update(a_info)
         self.train_result.update(c_info)
         self.train_result.update(disc_info)
+        if self.expert_distill:
+            self.train_result.update(e_info)
             
         return
 
@@ -728,6 +788,12 @@ class AMPAgent(common_agent.CommonAgent):
         model_a, _ = self.model.a2c_network.eval_actor({"obs": obs})
         oracle_loss = (oracle_a - model_a).pow(2).mean(dim=-1) * 50
         return {'oracle_loss': oracle_loss}
+
+    def expert_loss(self, res_dict):
+        bc_loss = torch.nn.functional.mse_loss(res_dict['mus'],res_dict['expert_action'] )
+        prior_loss = torch_ext.policy_kl(res_dict['prior_mu'], res_dict['prior_logvar'].exp(), res_dict['vae_mu'], res_dict['vae_log_var'].exp(), False)
+        return {'bc_loss': bc_loss, 'prior_loss': prior_loss}
+        pass
 
     def _disc_loss(self, disc_agent_logit, disc_demo_logit, obs_demo):
         '''
@@ -913,6 +979,12 @@ class AMPAgent(common_agent.CommonAgent):
                 "disc/logit_loss": torch_ext.mean_list(train_info['disc_logit_loss']).item(),
                 "disc/reward_mean": disc_reward_mean.item(),
                 "disc/reward_std": disc_reward_std.item(),
+            })
+        
+        if 'expert_loss' in train_info:
+            train_info_dict.update({
+                "expert/bc_loss": torch_ext.mean_list(train_info['bc_loss']).item(),
+                "expert/prior_loss": torch_ext.mean_list(train_info['prior_loss']).item(),
             })
         
         if "returns" in train_info:

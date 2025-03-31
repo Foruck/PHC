@@ -36,6 +36,8 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
 
     def __init__(self, cfg, sim_params, physics_engine, device_type, device_id, headless):
         self.far_target = cfg['env'].get('far_target', False)
+        if self.far_target:
+            self.far_target_time = config['env'].get('far_target_time', 1.)
         self._full_body_reward = cfg["env"].get("full_body_reward", True)
         self._fut_tracks = cfg["env"].get("fut_tracks", False)
         self._fut_tracks_dropout = cfg["env"].get("fut_tracks_dropout", False)
@@ -64,6 +66,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         self.reaction_prob = cfg['env'].get('reaction_prob', 0.1)
         # xinpeng added for reaction
 
+        
         self.reward_specs = cfg["env"].get("reward_specs", {"k_pos": 100, "k_rot": 10, "k_vel": 0.1, "k_ang_vel": 0.1, "w_pos": 0.5, "w_rot": 0.3, "w_vel": 0.1, "w_ang_vel": 0.1})
 
         self._num_joints = len(self._body_names)
@@ -498,7 +501,9 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
     def get_task_obs_size(self):
         obs_size = 0
         if (self._enable_task_obs):
-            if self.obs_v == 1:
+            if self.far_target:
+                obs_size = len(self._track_bodies) * self._num_traj_samples * 3
+            elif self.obs_v == 1:
                 obs_size = len(self._track_bodies) * self._num_traj_samples * 15
             elif self.obs_v == 2:  # + dofdiff
                 obs_size = len(self._track_bodies) * self._num_traj_samples * 15
@@ -682,7 +687,9 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
 
     def post_physics_step(self):
         super().post_physics_step()
-        
+       
+        if self.far_target:
+            self.extras['obs_expert'] = self.obs_expert.copy()
         if flags.im_eval:
             motion_times = (self.progress_buf) * self.dt + self._motion_start_times + self._motion_start_times_offset
             motion_res = self._get_state_from_motionlib_cache(self._sampled_motion_ids, motion_times, self._global_offset) 
@@ -703,6 +710,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             if self.collect_limits:
                 self.extras['limits'] = np.abs(self.intended_torques.cpu().numpy()).max(axis=0)
             
+
         return
 
     def _compute_observations(self, env_ids=None):
@@ -736,6 +744,9 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         else:
             self.obs_buf[env_ids] = obs
         
+        if self.far_target:
+            self.obs_expert = torch.cat([self_obs, self.task_obs_next])
+
         return obs
 
     def _compute_task_obs(self, env_ids=None, save_buffer = True):
@@ -762,8 +773,10 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             motion_res = self._get_state_from_motionlib_cache(env_ids_steps, motion_times_steps, self._global_offset[env_ids].repeat_interleave(time_steps, dim=0).view(-1, 3))  # pass in the env_ids such that the motion is in synced.
         else:
             if self.far_target:
-                motion_times = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids] + np.random.random() * 3. + 3.
+                motion_times = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids] + np.random.random() * 3. + self.far_target_time
                 motion_times = torch.minimum(motion_times, self._motion_lib._motion_lengths[env_ids])
+                motion_times_next = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids]
+                motion_res_next   = self._get_state_from_motionlib_cache(self._sampled_motion_ids[env_ids], motion_times_next, self._global_offset[env_ids])
             else:
                 motion_times = (self.progress_buf[env_ids] + 1) * self.dt + self._motion_start_times[env_ids] + self._motion_start_times_offset[env_ids]  # Next frame, so +1
             time_steps = 1
@@ -785,8 +798,15 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
         ref_body_vel_subset = ref_body_vel[..., self._track_bodies_id, :]
         ref_body_ang_vel_subset = ref_body_ang_vel[..., self._track_bodies_id, :]
 
-        if self.obs_v == 1 :
-            obs = compute_imitation_observations(root_pos, root_rot, body_pos_subset, body_rot_subset, body_vel_subset, body_ang_vel_subset, ref_rb_pos_subset, ref_rb_rot_subset, ref_body_vel_subset, ref_body_ang_vel_subset, time_steps, self._has_upright_start)
+        if self.far_target:
+            obs = compute_imitation_observations_far(root_pos, root_rot, body_pos_subset, body_rot_subset, body_vel_subset, body_ang_vel_subset, ref_rb_pos_subset, time_steps, self._has_upright_start)
+            if self.obs_v == 6:
+                ref_rb_pos_subset_next, ref_rb_rot_subset_next, ref_body_vel_subset_next, ref_body_ang_vel_subset_next = motion_res_next["rg_pos"], motion_res_next["rb_rot"], motion_res_next["body_vel"], motion_res_next["body_ang_vel"]
+                self.task_obs_next = compute_imitation_observations_v6(root_pos, root_rot, body_pos_subset, body_rot_subset, body_vel_subset, body_ang_vel_subset, ref_rb_pos_subset_next, ref_rb_rot_subset_next, ref_body_vel_subset_next, ref_body_ang_vel_subset_next, time_steps, self._has_upright_start)
+            else:
+                raise NotImplementedError
+        elif self.obs_v == 1:
+            obs = compute_imitation_observations(root_pos, root_rot, body_pos_subset, body_rot_subset, body_vel_subset, body_ang_vel_subset, ref_rb_pos_subset, time_steps, self._has_upright_start)
         elif self.obs_v == 2:
             ref_dof_pos_subset = ref_dof_pos.reshape(-1, len(self._dof_names), 3)[..., self._track_bodies_id[1:] - 1, :]  # Remove root from dof dim
             dof_pos_subset = self._dof_pos[env_ids].reshape(-1, len(self._dof_names), 3)[..., self._track_bodies_id[1:] - 1, :]
@@ -1156,7 +1176,66 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             force_tmp[..., 2] *= 0
             forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
             self.gym.apply_rigid_body_force_tensors(self.sim, gymtorch.unwrap_tensor(forces), gymtorch.unwrap_tensor(torques), gymapi.ENV_SPACE)
-    
+        elif self.reaction_mode=='egocentric_reference':
+            pos = self._rigid_body_pos
+            body_pos = pos.cpu()
+            head_idx = 15
+            left_shoulder_idx = 16
+            right_shoulder_idx = 17
+            left_hip_idx = 1
+            right_hip_idx = 2
+
+            head_pos = body_pos[:, head_idx]  
+            left_shoulder_pos = body_pos[:, left_shoulder_idx]
+            right_shoulder_pos = body_pos[:, right_shoulder_idx]
+            left_hip_pos = body_pos[:, left_hip_idx]
+            right_hip_pos = body_pos[:, right_hip_idx]
+
+            right_left_vec = ((right_hip_pos - left_hip_pos) + (right_shoulder_pos - left_shoulder_pos)) / 2.0
+            right_left_vec = torch.nn.functional.normalize(right_left_vec, dim=-1) 
+
+            hip_center = (left_hip_pos + right_hip_pos) / 2.0
+            up_vec = head_pos - hip_center 
+            up_vec = torch.nn.functional.normalize(up_vec, dim=-1)
+
+            forward_vec = torch.cross(up_vec, right_left_vec,dim=-1) 
+            forward_vec = torch.nn.functional.normalize(forward_vec, dim=-1)
+
+            right_vec = torch.cross(forward_vec, up_vec,dim=-1)  
+            right_vec = torch.nn.functional.normalize(right_vec, dim=-1)
+
+            forces = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
+            torques = torch.zeros((1, self._rigid_body_state.shape[0], 3), device=self.device, dtype=torch.float)
+
+            force_tmp = torch.ones_like(forces[:, self.reaction_idx::self.num_bodies, :]) 
+            force_tmp = torch.nn.functional.normalize(force_tmp, dim=-1) * self.external_interference_amplitude
+            force_direction = 'down'
+            direction_map = {
+                'left': -right_vec.to(self.device),
+                'right': right_vec.to(self.device),
+                'forward': forward_vec.to(self.device),
+                'backward': -forward_vec.to(self.device),
+                'up': up_vec.to(self.device),
+                'down': -up_vec.to(self.device)
+                }
+
+            
+            if force_direction not in direction_map:
+                raise ValueError("Invalid force direction. Choose from ['left', 'right', 'forward', 'backward', 'up', 'down'].")
+            force_tmp = force_tmp.to(self.device)
+            force_tmp = force_tmp * direction_map[force_direction].unsqueeze(0).to(self.device)
+            no_inter_index = torch.where((self.progress_buf < 75) | (self.progress_buf > 175))[0]
+            force_tmp[:, no_inter_index, :] = 0. 
+
+            forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
+
+            self.gym.apply_rigid_body_force_tensors(
+             self.sim, 
+                gymtorch.unwrap_tensor(forces), 
+                gymtorch.unwrap_tensor(torques), 
+                gymapi.ENV_SPACE
+)
+
     def _compute_reset(self):
         time = (self.progress_buf) * self.dt + self._motion_start_times + self._motion_start_times_offset # Reset is also called after the progress_buf is updated. 
 
@@ -1347,6 +1426,35 @@ def compute_imitation_observations_v3(root_pos, root_rot, body_pos, body_rot, bo
 
     return obs
 
+@torch.jit.script
+def compute_imitation_observations_far(root_pos, root_rot, body_pos, ref_body_pos, time_steps, upright):
+    # type: (Tensor, Tensor, Tensor, Tensor, int, bool) -> Tensor
+    # Adding pose information at the back
+    # Future tracks in this obs will not contain future diffs.
+    obs = []
+    B, J, _ = body_pos.shape
+
+    if not upright:
+        root_rot = remove_base_rot(root_rot)
+
+    heading_inv_rot = torch_utils.calc_heading_quat_inv(root_rot)
+    heading_inv_rot_expand = heading_inv_rot.unsqueeze(-2).repeat((1, body_pos.shape[1], 1)).repeat_interleave(time_steps, 0)
+    
+
+    ##### Body position and rotation differences
+    diff_global_body_pos = ref_body_pos.view(B, time_steps, J, 3) - body_pos.view(B, 1, J, 3)
+    diff_local_body_pos_flat = torch_utils.my_quat_rotate(heading_inv_rot_expand.view(-1, 4), diff_global_body_pos.view(-1, 3))
+
+    ##### body pos + Dof_pos This part will have proper futuers.
+    local_ref_body_pos = ref_body_pos.view(B, time_steps, J, 3) - root_pos.view(B, 1, 1, 3)  # preserves the body position
+    local_ref_body_pos = torch_utils.my_quat_rotate(heading_inv_rot_expand.view(-1, 4), local_ref_body_pos.view(-1, 3))
+
+    # make some changes to how futures are appended.
+    obs.append(diff_local_body_pos_flat.view(B, time_steps, -1))  # 1 * timestep * 24 * 3
+    obs.append(local_ref_body_pos.view(B, time_steps, -1))  # timestep  * 24 * 3
+
+    obs = torch.cat(obs, dim=-1).view(B, -1)
+    return obs
 
 @torch.jit.script
 def compute_imitation_observations_v6(root_pos, root_rot, body_pos, body_rot, body_vel, body_ang_vel, ref_body_pos, ref_body_rot, ref_body_vel, ref_body_ang_vel, time_steps, upright):
