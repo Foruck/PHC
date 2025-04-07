@@ -1,4 +1,4 @@
-
+*.gif
 *.json
 
 # Byte-compiled / optimized / DLL files
@@ -142,3 +142,4 @@ output_videos/
 *.pt
 new_trials
 gh-md-toc
+phc/muchun_test/*

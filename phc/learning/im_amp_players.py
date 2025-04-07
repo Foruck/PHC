@@ -68,6 +68,9 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
             self.clean_actions, self.clean_actions_all = [], []
             self.keys_all = []
             self.reset_buf, self.reset_buf_all = [], []
+        
+        if humanoid_env.collect_fatigue:
+            self.MF, self.MF_all = [], []
 
         if humanoid_env.collect_limits:
             self.torque_limits = np.zeros(humanoid_env.num_dof)
@@ -121,6 +124,9 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 self.env_actions.append(info['actions'])
                 self.reset_buf.append(info['reset_buf'])
             
+            if humanoid_env.collect_fatigue:
+                self.MF.append(info['MF'])
+
             if humanoid_env.collect_limits:
                 self.torque_limits = np.maximum(self.torque_limits, info['limits'])
 
@@ -181,10 +187,15 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
 
                     self.motion_length_all += [obs.shape[0] for obs in all_obs_buf]
 
-                    self.mpjpe_all.append(all_mpjpe)
-                    self.pred_pos_all += all_body_pos_pred
-                    self.gt_pos_all   += all_body_pos_gt
-                    self.pred_rot_all += all_body_rot_pred
+                if humanoid_env.collect_fatigue:
+                    all_MF       = np.stack(self.MF)
+                    all_MF       = [all_MF[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
+                    self.MF_all += all_MF
+
+                self.mpjpe_all.append(all_mpjpe)
+                self.pred_pos_all += all_body_pos_pred
+                self.gt_pos_all   += all_body_pos_gt
+                self.pred_rot_all += all_body_rot_pred
                 metrics = compute_metrics_lite(all_body_pos_pred, all_body_pos_gt)
                 self.metric_dict.update(metrics, metrics['mpjpe_g'].size)
 
@@ -256,6 +267,19 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                             'known_peaks': self.torque_limits,
                         }, dump_dir)
                     
+                    if humanoid_env.collect_fatigue:
+                        motion_file = humanoid_env.cfg.env.motion_file.split('/')[-1].split('.')[0]
+                        dump_dir = osp.join(self.config['network_path'], 'fatigue', f'{humanoid_env.fatigueF}_{humanoid_env.fatigue_r}_{humanoid_env.fatigueR}.pkl')
+                        os.makedirs(osp.join(self.config['network_path'], 'fatigue'), exist_ok=True)
+                        joblib.dump({
+                            "key_names": np.array(self.keys_all[:humanoid_env._motion_lib._num_unique_motions]),
+                            'pred_pos': self.pred_pos_all[:humanoid_env._motion_lib._num_unique_motions],
+                            "gt_pos": self.gt_pos_all[:humanoid_env._motion_lib._num_unique_motions],
+                            'pred_rot': self.pred_rot_all[:humanoid_env._motion_lib._num_unique_motions],
+                            'MF': self.MF_all[:humanoid_env._motion_lib._num_unique_motions],
+                        }, dump_dir, compress=True)
+
+
                     # import ipdb; ipdb.set_trace()
 
                     joblib.dump(failed_keys, osp.join(self.config['network_path'], "failed.pkl"))
@@ -275,6 +299,8 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 self.mpjpe, self.gt_pos, self.pred_pos, self.pred_rot = [], [], [], []
                 if humanoid_env.collect_dataset: 
                     self.obs_buf, self.env_actions, self.clean_actions, self.reset_buf, self.keys = [], [], [], [], []
+                if humanoid_env.collect_fatigue: 
+                    self.MF = []
                 if COLLECT_Z: self.zs = []
                 self.curr_stpes = 0
 

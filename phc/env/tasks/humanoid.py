@@ -98,6 +98,7 @@ class Humanoid(BaseTask):
         self.pd_modifier = cfg["env"].get("pd_modifier", False)
         self.use_fatigue = cfg["env"].get("use_fatigue", False)
         self.randomized_fatigue = cfg["env"].get("randomized_fatigue", False)
+        self.collect_fatigue    = cfg['env'].get('collect_fatigue', False)
 
         self.power_scale = self.cfg["control"].get("powerScale", 1.0)
 
@@ -556,6 +557,9 @@ class Humanoid(BaseTask):
         self.RC = torch.ones(self.num_envs, self.num_dof * self.num3CC, device=self.device, requires_grad=False)
         self.LD = self.cfg['env'].get('LD', 10.)
         self.LR = self.cfg['env'].get('LR', 10.)
+        self.fatigueF  = self.cfg['env'].get('fatigueF', 1.)
+        self.fatigue_r = self.cfg['env'].get('fatigue_r', 1.)
+        self.fatigueR  = self.cfg['env'].get('fatigueR', 0.01)
         self.F  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigueF', 1.)
         self.r  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigue_r', 1.)
         self.R  = torch.ones(self.num_dof, device=self.device, requires_grad=False) * self.cfg['env'].get('fatigueR', 0.01)

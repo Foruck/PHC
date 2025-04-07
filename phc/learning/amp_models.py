@@ -39,7 +39,7 @@ class ModelAMPContinuous(ModelA2CContinuousLogStd):
                 disc_demo_logit = self.a2c_network.eval_disc(amp_demo_obs)
                 result["disc_demo_logit"] = disc_demo_logit
 
-                if input_dict.get('expert_action', False):
+                if 'expert_action' in input_dict:
                     result['prior_mu'], result['prior_logvar'] = self.a2c_network.compute_prior(input_dict)
                     result.update(self.a2c_network.eval_z(input_dict)[1])
 

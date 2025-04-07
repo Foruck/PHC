@@ -8,8 +8,6 @@ env_spacing: 5
 episode_length: 300
 is_flag_run: False
 enable_debug_vis: False
-far_target: True
-far_target_time: 2
 
 fut_tracks: False
 self_obs_v: 1

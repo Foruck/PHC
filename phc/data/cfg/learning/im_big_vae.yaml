@@ -28,7 +28,9 @@ params:
       emebedding_size: 64
       use_vae_prior: True
       d2rl: False
-      vae_activation: relu
+      activation: relu
+      use_vae_clamped_prior: True
+      vae_var_clamp_max: 2.
       initializer: 
         name: default
     

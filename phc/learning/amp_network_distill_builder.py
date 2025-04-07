@@ -29,6 +29,8 @@ class AMPZBuilder(AMPBuilder):
             self.embedding_size         = params['vae']['emebedding_size']
             self.use_vae_prior          = params['vae'].get("use_vae_prior", False)
             self.use_vae_fixed_prior    = params['vae'].get("use_vae_fixed_prior", False)
+            self.use_vae_clamped_prior  = params['vae'].get("use_vae_clamped_prior", False)
+            self.vae_var_clamp_max      = params['vae'].get("vae_var_clamp_max", 2.)
             self.use_vae_sphere_posterior = params['vae'].get("use_vae_sphere_posterior", False)
             self.vae_prior_fixed_logvar = params['vae'].get("vae_prior_fixed_logvar", 0.)
             self.vae_units              = params['vae']['units']
@@ -55,28 +57,25 @@ class AMPZBuilder(AMPBuilder):
         def form_embedding(self, task_out_z):
             extra_dict = {}
             B, N = task_out_z.shape
-            if self.z_type == 'vae':
-                self.vae_mu = vae_mu = self.z_mu(task_out_z)
-                self.vae_log_var = vae_log_var = self.z_logvar(task_out_z)
+            self.vae_mu = vae_mu = self.z_mu(task_out_z)
+            self.vae_log_var = vae_log_var = self.z_logvar(task_out_z)
                 
-                if self.use_vae_clamped_prior:
-                    self.vae_log_var = vae_log_var = torch.clamp(vae_log_var, min = -5, max = self.vae_var_clamp_max)
+            if self.use_vae_clamped_prior:
+                self.vae_log_var = vae_log_var = torch.clamp(vae_log_var, min = -5, max = self.vae_var_clamp_max)
                 
-                task_out_proj, self.z_noise = self.reparameterize(vae_mu, vae_log_var)
+            task_out_proj, self.z_noise = self.reparameterize(vae_mu, vae_log_var)
                     
-                if flags.test:
-                    task_out_proj = vae_mu
+            if flags.test:
+                task_out_proj = vae_mu
                     
-                if flags.trigger_input:
-                    flags.trigger_input = False
-                    flags.debug = not flags.debug
+            if flags.trigger_input:
+                flags.trigger_input = False
+                flags.debug = not flags.debug
                     
-                if self.use_vae_sphere_posterior:
-                    task_out_proj = project_to_norm(task_out_proj, norm=self.embedding_norm, z_type="sphere")
+            if self.use_vae_sphere_posterior:
+                task_out_proj = project_to_norm(task_out_proj, norm=self.embedding_norm, z_type="sphere")
                 
-                extra_dict = {"vae_mu": vae_mu, "vae_log_var": vae_log_var, "noise": self.z_noise}
-            else:
-                raise NotImplementedError
+            extra_dict = {"vae_mu": vae_mu, "vae_log_var": vae_log_var, "noise": self.z_noise}
             return task_out_proj, extra_dict
         
         
@@ -108,7 +107,11 @@ class AMPZBuilder(AMPBuilder):
             z_out, extra_dict = self.form_embedding(z_out)
             return z_out, extra_dict
         
-        def eval_critic(self, z_out, obs_dict):
+        def eval_critic(self, obs_dict):
+            
+            obs = obs_dict['obs']
+            z_out = self.z_mlp(obs)
+            z_out, extra_dict = self.form_embedding(z_out)
 
             obs = obs_dict['obs']
 
@@ -124,8 +127,11 @@ class AMPZBuilder(AMPBuilder):
                 value = self.value_act(self.value(c_out))
                 return value
             
-        def eval_actor(self, z_out, obs_dict):
+        def eval_actor(self, obs_dict):
             obs = obs_dict['obs']
+            z_out = self.z_mlp(obs)
+            z_out, extra_dict = self.form_embedding(z_out)
+            
             states = obs_dict.get('rnn_states', None)
             seq_length = obs_dict.get('seq_length', 1)
 
@@ -149,10 +155,8 @@ class AMPZBuilder(AMPBuilder):
         def forward(self, obs_dict):
             states = obs_dict.get('rnn_states', None)
 
-            z_out, extra_dict = self.eval_z(obs_dict)
-
-            actor_outputs = self.eval_actor(z_out, obs_dict)
-            value_outputs = self.eval_critic(z_out, obs_dict)
+            actor_outputs = self.eval_actor(obs_dict)
+            value_outputs = self.eval_critic(obs_dict)
             
             if self.has_rnn:
                 raise NotImplementedError
@@ -164,43 +168,38 @@ class AMPZBuilder(AMPBuilder):
         def _build_z_mlp(self):
             self_obs_size, task_obs_size = self.self_obs_size, self.task_obs_size
             
-            if self.z_type == "vae":
-                out_size = self.embedding_size * 5
-            else:
-                out_size = self.embedding_size
+            out_size = self.embedding_size * 5
 
             mlp_input_shape = self_obs_size + task_obs_size  # target
             mlp_args = {'input_size': mlp_input_shape, 'units': self.vae_units, 'activation': self.vae_activation, 'dense_func': torch.nn.Linear}
             self.z_mlp = self._build_mlp(**mlp_args)
             
             if not self.has_rnn:
-                self.z_mlp.append(nn.Linear(in_features=self._task_units[-1], out_features=out_size))
+                self.z_mlp.append(nn.Linear(in_features=self.vae_units[-1], out_features=out_size))
             else:
                 self.z_proj_linear = nn.Linear(in_features=self.rnn_units, out_features=out_size)
             
-            mlp_init = self.init_factory.create(**self._task_initializer)
+            mlp_init = self.init_factory.create(**self.vae_initializer)
             init_mlp(self.z_mlp, mlp_init)
 
-            if self.z_type == "vae":
-                self.z_mu = nn.Linear(in_features=self.embedding_size * 5, out_features=self.embedding_size)
-                self.z_logvar = nn.Linear(in_features=self.embedding_size * 5, out_features=self.embedding_size)
+            self.z_mu = nn.Linear(in_features=self.embedding_size * 5, out_features=self.embedding_size)
+            self.z_logvar = nn.Linear(in_features=self.embedding_size * 5, out_features=self.embedding_size)
                 
-                init_mlp(self.z_mu, mlp_init)
-                init_mlp(self.z_logvar, mlp_init)
+            init_mlp(self.z_mu, mlp_init)
+            init_mlp(self.z_logvar, mlp_init)
                 
-                if self.use_vae_prior:
-                    mlp_args = {'input_size': self_obs_size, 'units': self.vae_units, 'activation': self.vae_activation, 'dense_func': torch.nn.Linear}
-                    self.z_prior = self._build_mlp(**mlp_args)
-                    self.z_prior_mu = nn.Linear(in_features=self._task_units[-1], out_features=self.embedding_size)
-                    self.z_prior_logvar = nn.Linear(in_features=self._task_units[-1], out_features=self.embedding_size)
-                    init_mlp(self.z_prior, mlp_init)
-                    init_mlp(self.z_prior_mu, mlp_init)
-                    init_mlp(self.z_prior_logvar, mlp_init)
-
-                elif self.use_vae_fixed_prior:
-                    mlp_args = {'input_size': self_obs_size, 'units': self.vae_units, 'activation': self.vae_activation, 'dense_func': torch.nn.Linear}
-                    self.z_prior = self._build_mlp(**mlp_args)
-                    self.z_prior_mu = nn.Linear(in_features=self._task_units[-1], out_features=self.embedding_size)
-                    init_mlp(self.z_prior, mlp_init)
-                    init_mlp(self.z_prior_mu, mlp_init)
+            if self.use_vae_prior:
+                mlp_args = {'input_size': self_obs_size, 'units': self.vae_units, 'activation': self.vae_activation, 'dense_func': torch.nn.Linear}
+                self.z_prior = self._build_mlp(**mlp_args)
+                self.z_prior_mu = nn.Linear(in_features=self.vae_units[-1], out_features=self.embedding_size)
+                self.z_prior_logvar = nn.Linear(in_features=self.vae_units[-1], out_features=self.embedding_size)
+                init_mlp(self.z_prior, mlp_init)
+                init_mlp(self.z_prior_mu, mlp_init)
+                init_mlp(self.z_prior_logvar, mlp_init)
+            elif self.use_vae_fixed_prior:
+                mlp_args = {'input_size': self_obs_size, 'units': self.vae_units, 'activation': self.vae_activation, 'dense_func': torch.nn.Linear}
+                self.z_prior = self._build_mlp(**mlp_args)
+                self.z_prior_mu = nn.Linear(in_features=self.vae_units[-1], out_features=self.embedding_size)
+                init_mlp(self.z_prior, mlp_init)
+                init_mlp(self.z_prior_mu, mlp_init)
             return
