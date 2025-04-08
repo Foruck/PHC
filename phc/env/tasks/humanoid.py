@@ -1665,7 +1665,7 @@ class Humanoid(BaseTask):
         return
     
     def compute_3CC(self, intended_torques):
-        self.TL = torch.clip(intended_torques, -self.known_peaks, self.known_peaks)
+        self.TL = torch.abs(torch.clip(intended_torques, -self.known_peaks, self.known_peaks))
         Ct = torch.zeros_like(self.TL, requires_grad=False)
         Ct = torch.where((self.MA < self.TL) * (self.MR > (self.TL - self.MA)), self.LD * (self.TL - self.MA), Ct)
         Ct = torch.where((self.MA < self.TL) * (self.MR < (self.TL - self.MA)), self.LD * self.MR, Ct)

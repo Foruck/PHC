@@ -1179,6 +1179,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
             forces[:, self.reaction_idx::self.num_bodies, :] = force_tmp
             self.gym.apply_rigid_body_force_tensors(self.sim, gymtorch.unwrap_tensor(forces), gymtorch.unwrap_tensor(torques), gymapi.ENV_SPACE)
         elif self.reaction_mode=='egocentric_reference':
+            
             pos = self._rigid_body_pos
             body_pos = pos.cpu()
             head_idx = 15
@@ -1216,7 +1217,7 @@ class HumanoidIm(humanoid_amp_task.HumanoidAMPTask):
 
             force_tmp = torch.ones_like(forces[:, self.reaction_idx::self.num_bodies, :]) 
             force_tmp = torch.nn.functional.normalize(force_tmp, dim=-1) * self.external_interference_amplitude
-            force_direction = 'right'
+            force_direction = 'left'
             direction_map = {
                 'left': -right_vec.to(self.device),
                 'right': right_vec.to(self.device),
