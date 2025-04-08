@@ -71,6 +71,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
         
         if humanoid_env.collect_fatigue:
             self.MF, self.MF_all = [], []
+            self.keys_all = []
 
         if humanoid_env.collect_limits:
             self.torque_limits = np.zeros(humanoid_env.num_dof)
@@ -190,6 +191,7 @@ class IMAMPPlayerContinuous(amp_players.AMPPlayerContinuous):
                 if humanoid_env.collect_fatigue:
                     all_MF       = np.stack(self.MF)
                     all_MF       = [all_MF[: (i - 1), idx] for idx, i in enumerate(humanoid_env._motion_lib.get_motion_num_steps())]
+                    self.keys_all += humanoid_env._motion_lib.curr_motion_keys.tolist()
                     self.MF_all += all_MF
 
                 self.mpjpe_all.append(all_mpjpe)
