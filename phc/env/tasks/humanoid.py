@@ -629,11 +629,11 @@ class Humanoid(BaseTask):
             
             self._compute_observations(env_ids)
             if self.use_fatigue:
-                self.MF[:] = 0.
-                self.MA[:] = 0.
-                self.MR[:] = 1.
-                self.TL[:] = 0.
-                self.RC[:] = 1.
+                self.MF[env_ids, :] = 0.
+                self.MA[env_ids, :] = 0.
+                self.MR[env_ids, :] = 1.
+                self.TL[env_ids, :] = 0.
+                self.RC[env_ids, :] = 1.
         return
 
     def _reset_env_tensors(self, env_ids):
